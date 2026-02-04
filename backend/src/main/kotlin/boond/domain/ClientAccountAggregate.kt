@@ -14,30 +14,28 @@ import org.axonframework.spring.stereotype.Aggregate
 @Aggregate
 class ClientAccountAggregate {
 
-    @AggregateIdentifier var customerId: java.util.UUID? = null
+  @AggregateIdentifier var customerId: java.util.UUID? = null
 
-    @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
-    @CommandHandler
-    fun handle(command: CreateAccountCommand) {
-        // These rules act as "Guards"
-        requireNotNull(command.customerId) { "CustomerID must not be null" }
-        requireNotNull(command.connectionId) { "ConnectionID must not be null" }
-        require(command.clientEmail.contains("@")) { "Invalid email format" }
-        require(command.companyId > 0) { "Company ID must be a positive number" }
+  @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
+  @CommandHandler
+  fun handle(command: CreateAccountCommand) {
+    // These rules act as "Guards"
+    requireNotNull(command.customerId) { "CustomerID must not be null" }
+    requireNotNull(command.connectionId) { "ConnectionID must not be null" }
+    require(command.clientEmail.contains("@")) { "Invalid email format" }
+    require(command.companyId > 0) { "Company ID must be a positive number" }
 
-        AggregateLifecycle.apply(
-                AccountCreatedEvent(
-                        customerId = command.customerId, // Use !! now that we've checked
-                        connectionId = command.connectionId,
-                        clientEmail = command.clientEmail,
-                        companyId = command.companyId
-                )
-        )
-    }
+    AggregateLifecycle.apply(
+        AccountCreatedEvent(
+            customerId = command.customerId, // Use !! now that we've checked
+            connectionId = command.connectionId,
+            clientEmail = command.clientEmail,
+            companyId = command.companyId))
+  }
 
-    @EventSourcingHandler
-    fun on(event: AccountCreatedEvent) {
-        // handle event
-        customerId = event.customerId
-    }
+  @EventSourcingHandler
+  fun on(event: AccountCreatedEvent) {
+    // handle event
+    customerId = event.customerId
+  }
 }

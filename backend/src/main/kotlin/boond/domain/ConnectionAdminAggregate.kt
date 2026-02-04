@@ -24,11 +24,7 @@ class ConnectionAdminAggregate {
     require(command.adminEmail.isNotBlank()) { "Admin email must not be empty" }
 
     AggregateLifecycle.apply(
-            AdminConnectedEvent(
-                    connectionId = command.connectionId,
-                    adminEmail = command.adminEmail
-            )
-    )
+        AdminConnectedEvent(connectionId = command.connectionId, adminEmail = command.adminEmail))
   }
 
   @EventSourcingHandler
@@ -41,15 +37,13 @@ class ConnectionAdminAggregate {
   fun handle(command: MarkListOfCompaniesFetchedCommand) {
 
     AggregateLifecycle.apply(
-            ListOfCompaniesFetchedEvent(
-                    connectionId = command.connectionId,
-                    adminEmail = command.adminEmail,
-                    listOfCompanies =
-                            command.listOfCompanies.map {
-                              boond.events.CompanyInfo(it.companyId, it.companyName)
-                            }
-            )
-    )
+        ListOfCompaniesFetchedEvent(
+            connectionId = command.connectionId,
+            adminEmail = command.adminEmail,
+            listOfCompanies =
+                command.listOfCompanies.map {
+                  boond.events.CompanyInfo(it.companyId, it.companyName)
+                }))
   }
 
   @EventSourcingHandler
