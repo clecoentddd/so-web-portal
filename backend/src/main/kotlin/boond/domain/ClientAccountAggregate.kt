@@ -16,6 +16,8 @@ class ClientAccountAggregate {
 
   @AggregateIdentifier var customerId: java.util.UUID? = null
 
+  private var validCompanies: List<boond.common.CompanyInfo> = emptyList()
+
   @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
   @CommandHandler
   fun handle(command: CreateAccountCommand) {
@@ -24,6 +26,10 @@ class ClientAccountAggregate {
     requireNotNull(command.connectionId) { "ConnectionID must not be null" }
     require(command.clientEmail.contains("@")) { "Invalid email format" }
     require(command.companyId > 0) { "Company ID must be a positive number" }
+
+    if (validCompanies.isNotEmpty() && validCompanies.none { it.companyId == command.companyId }) {
+      throw boond.common.CommandException("Company ID ${command.companyId} does not exist")
+    }
 
     AggregateLifecycle.apply(
         AccountCreatedEvent(
@@ -37,5 +43,10 @@ class ClientAccountAggregate {
   fun on(event: AccountCreatedEvent) {
     // handle event
     customerId = event.customerId
+  }
+
+  @EventSourcingHandler
+  fun on(event: boond.events.ListOfCompaniesFetchedEvent) {
+    validCompanies = event.listOfCompanies
   }
 }

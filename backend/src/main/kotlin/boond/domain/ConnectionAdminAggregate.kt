@@ -40,10 +40,7 @@ class ConnectionAdminAggregate {
         ListOfCompaniesFetchedEvent(
             connectionId = command.connectionId,
             adminEmail = command.adminEmail,
-            listOfCompanies =
-                command.listOfCompanies.map {
-                  boond.events.CompanyInfo(it.companyId, it.companyName)
-                }))
+            listOfCompanies = command.listOfCompanies))
   }
 
   @EventSourcingHandler

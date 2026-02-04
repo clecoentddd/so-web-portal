@@ -15,20 +15,21 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 @Component
 class CustomerAccountListReadModelProjector(
-    var repository: CustomerAccountListReadModelRepository
+    private val repository: CustomerAccountListReadModelRepository
 ) {
 
   @EventHandler
   fun on(event: AccountCreatedEvent) {
-    // throws exception if not available (adjust logic)
+    // Find existing entity or create a new one
     val entity =
-        this.repository.findById(event.customerId).orElse(CustomerAccountListReadModelEntity())
+        repository.findById(event.customerId).orElseGet { CustomerAccountListReadModelEntity() }
+
     entity
         .apply {
           customerId = event.customerId
           clientEmail = event.clientEmail
           companyId = event.companyId
         }
-        .also { this.repository.save(it) }
+        .also { repository.save(it) }
   }
 }
