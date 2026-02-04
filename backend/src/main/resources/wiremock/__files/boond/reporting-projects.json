@@ -1,0 +1,141 @@
+{
+  "data": [
+    {
+      "id": 12345,
+      "typeResource": "reportingProjects",
+      "attributes": {
+        "projectId": 12345,
+        "reference": "PRJ-2024-001",
+        "title": "Migration CRM Salesforce",
+        "statistics": {
+          "planning": {
+            "totalHours": 500.0,
+            "consumedHours": 320.5,
+            "remainingHours": 179.5,
+            "completionRate": 64.1
+          },
+          "financial": {
+            "revenue": 120000.00,
+            "invoiced": 37500.00,
+            "toInvoice": 82500.00,
+            "costs": 48000.00,
+            "purchases": 30000.00,
+            "margin": 42000.00,
+            "marginRate": 35.0
+          },
+          "hours": {
+            "billable": 300.0,
+            "nonBillable": 20.5,
+            "total": 320.5,
+            "billingRate": 93.63
+          }
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 789,
+            "typeResource": "companies",
+            "attributes": {
+              "name": "OSCIN SARL"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 12346,
+      "typeResource": "reportingProjects",
+      "attributes": {
+        "projectId": 12346,
+        "reference": "PRJ-2024-002",
+        "title": "Refonte Site E-commerce",
+        "statistics": {
+          "planning": {
+            "totalHours": 300.0,
+            "consumedHours": 300.0,
+            "remainingHours": 0.0,
+            "completionRate": 100.0
+          },
+          "financial": {
+            "revenue": 75000.00,
+            "invoiced": 75000.00,
+            "toInvoice": 0.00,
+            "costs": 30000.00,
+            "purchases": 20000.00,
+            "margin": 25000.00,
+            "marginRate": 33.33
+          },
+          "hours": {
+            "billable": 300.0,
+            "nonBillable": 0.0,
+            "total": 300.0,
+            "billingRate": 100.0
+          }
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies",
+            "attributes": {
+              "name": "Blanc SA"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 12347,
+      "typeResource": "reportingProjects",
+      "attributes": {
+        "projectId": 12347,
+        "reference": "PRJ-2024-003",
+        "title": "Application Mobile iOS/Android",
+        "statistics": {
+          "planning": {
+            "totalHours": 800.0,
+            "consumedHours": 125.0,
+            "remainingHours": 675.0,
+            "completionRate": 15.63
+          },
+          "financial": {
+            "revenue": 200000.00,
+            "invoiced": 0.00,
+            "toInvoice": 200000.00,
+            "costs": 18750.00,
+            "purchases": 5000.00,
+            "margin": 176250.00,
+            "marginRate": 88.13
+          },
+          "hours": {
+            "billable": 120.0,
+            "nonBillable": 5.0,
+            "total": 125.0,
+            "billingRate": 96.0
+          }
+        }
+      },
+      "relationships": {
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies",
+            "attributes": {
+              "name": "TechStart SAS"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "count": 3,
+    "pagination": {
+      "page": 1,
+      "perPage": 100,
+      "total": 3
+    }
+  }
+}

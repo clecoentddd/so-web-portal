@@ -1,0 +1,240 @@
+{
+  "id": "3458764658242238243",
+  "status": "Created",
+  "title": "slice: Fetch Companies List From Boond",
+  "context": "Socraft Client Web Portal",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764658242238261",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Companies List From Boond",
+      "title": "Mark List of Companies Fetched",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "ListOfCompanies",
+          "generated": true,
+          "type": "Custom",
+          "cardinality": "List",
+          "subfields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyName",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238224",
+          "type": "OUTBOUND",
+          "title": "List of Companies Fetched",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764658242238259",
+          "type": "INBOUND",
+          "title": "processor Fetch Boond Companies List",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764658242238224",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Companies List From Boond",
+      "title": "List of Companies Fetched",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "ListOfCompanies",
+          "type": "Custom",
+          "generated": true,
+          "subfields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyName",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "cardinality": "List",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238263",
+          "type": "OUTBOUND",
+          "title": "Admin Connected",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238268",
+          "type": "OUTBOUND",
+          "title": "List Of Companies",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238261",
+          "type": "INBOUND",
+          "title": "Mark List of Companies Fetched",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764658242238259",
+      "tags": [],
+      "groupId": "3458764658242238397",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: Fetch Companies List From Boond",
+      "title": "processor Fetch Boond Companies List",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "ListOfCompanies",
+          "generated": true,
+          "type": "Custom",
+          "cardinality": "List",
+          "subfields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "cardinality": "Single"
+            },
+            {
+              "name": "companyName",
+              "type": "String",
+              "cardinality": "Single"
+            }
+          ],
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238261",
+          "type": "OUTBOUND",
+          "title": "Mark List of Companies Fetched",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764658242238263",
+          "type": "INBOUND",
+          "title": "Admin Connected",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Connection Admin"
+  ]
+}

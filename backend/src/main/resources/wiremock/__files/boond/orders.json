@@ -1,0 +1,105 @@
+{
+  "data": [
+    {
+      "id": 34567,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "BC-2024-001",
+        "title": "Bon de commande Migration CRM",
+        "state": 30,
+        "orderDate": "2024-01-10",
+        "startDate": "2024-01-15",
+        "endDate": "2024-06-30",
+        "informations": {
+          "totalExcludingTaxes": 120000.00,
+          "totalIncludingTaxes": 144000.00,
+          "totalVat": 24000.00
+        }
+      },
+      "relationships": {
+        "project": {
+          "data": {
+            "id": 12345,
+            "typeResource": "projects"
+          }
+        },
+        "company": {
+          "data": {
+            "id": 789,
+            "typeResource": "companies"
+          }
+        }
+      }
+    },
+    {
+      "id": 34568,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "BC-2023-042",
+        "title": "Bon de commande Site E-commerce",
+        "state": 50,
+        "orderDate": "2023-10-25",
+        "startDate": "2023-11-01",
+        "endDate": "2024-03-31",
+        "informations": {
+          "totalExcludingTaxes": 75000.00,
+          "totalIncludingTaxes": 90000.00,
+          "totalVat": 15000.00
+        }
+      },
+      "relationships": {
+        "project": {
+          "data": {
+            "id": 12346,
+            "typeResource": "projects"
+          }
+        },
+        "company": {
+          "data": {
+            "id": 790,
+            "typeResource": "companies"
+          }
+        }
+      }
+    },
+    {
+      "id": 34569,
+      "typeResource": "orders",
+      "attributes": {
+        "reference": "BC-2024-003",
+        "title": "Bon de commande Application Mobile",
+        "state": 20,
+        "orderDate": "2024-01-28",
+        "startDate": "2024-02-01",
+        "endDate": "2024-08-31",
+        "informations": {
+          "totalExcludingTaxes": 200000.00,
+          "totalIncludingTaxes": 240000.00,
+          "totalVat": 40000.00
+        }
+      },
+      "relationships": {
+        "project": {
+          "data": {
+            "id": 12347,
+            "typeResource": "projects"
+          }
+        },
+        "company": {
+          "data": {
+            "id": 791,
+            "typeResource": "companies"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "count": 3,
+    "pagination": {
+      "page": 1,
+      "perPage": 100,
+      "total": 3
+    }
+  }
+}

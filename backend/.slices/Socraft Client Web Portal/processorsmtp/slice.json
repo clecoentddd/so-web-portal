@@ -1,0 +1,231 @@
+{
+  "id": "3458764658242238240",
+  "status": "Created",
+  "title": "slice: processor SMTP",
+  "context": "Socraft Client Web Portal",
+  "sliceType": "STATE_CHANGE",
+  "commands": [
+    {
+      "id": "3458764658242238281",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: processor SMTP",
+      "title": "Mark Email Sent",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "companyId",
+          "type": "Long",
+          "mapping": "ListOfCompanies",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "customerId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "COMMAND",
+      "description": "",
+      "aggregate": "Client Account",
+      "aggregateDependencies": [
+        "Client Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238230",
+          "type": "OUTBOUND",
+          "title": "Customer Details Email Sent",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764658242238279",
+          "type": "INBOUND",
+          "title": "processor SMTP",
+          "elementType": "AUTOMATION"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "3458764658242238230",
+      "tags": [],
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: processor SMTP",
+      "title": "Customer Details Email Sent",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "companyId",
+          "type": "Long",
+          "mapping": "ListOfCompanies",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "customerId",
+          "type": "UUID",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "EVENT",
+      "description": "",
+      "aggregate": "Client Account",
+      "aggregateDependencies": [
+        "Client Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238283",
+          "type": "OUTBOUND",
+          "title": "invitation à envoyer",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238281",
+          "type": "INBOUND",
+          "title": "Mark Email Sent",
+          "elementType": "COMMAND"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "readmodels": [],
+  "screens": [],
+  "screenImages": [],
+  "screenLayouts": [],
+  "processors": [
+    {
+      "id": "3458764658242238279",
+      "tags": [],
+      "groupId": "3458764658242238400",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: processor SMTP",
+      "title": "processor SMTP",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "clientEmail",
+          "type": "String",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "companyId",
+          "type": "Long",
+          "mapping": "ListOfCompanies",
+          "generated": true,
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        },
+        {
+          "name": "customerId",
+          "generated": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": [],
+          "idAttribute": false
+        }
+      ],
+      "type": "AUTOMATION",
+      "description": "",
+      "aggregate": "Client Account",
+      "aggregateDependencies": [
+        "Client Account"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764658242238281",
+          "type": "OUTBOUND",
+          "title": "Mark Email Sent",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764658242238283",
+          "type": "INBOUND",
+          "title": "invitation à envoyer",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    }
+  ],
+  "tables": [],
+  "specifications": [],
+  "actors": [],
+  "aggregates": [
+    "Client Account"
+  ]
+}

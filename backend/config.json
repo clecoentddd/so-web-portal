@@ -1,0 +1,1379 @@
+{
+  "slices": [
+    {
+      "id": "3458764658242238242",
+      "status": "Created",
+      "index": 1,
+      "title": "slice: Admin Connection",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764658242238252",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Admin Connection",
+          "title": "To connect",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238222",
+              "type": "OUTBOUND",
+              "title": "Admin Connected",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238254",
+              "type": "INBOUND",
+              "title": "Admin Connection",
+              "elementType": "SCREEN"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764658242238222",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Admin Connection",
+          "title": "Admin Connected",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238263",
+              "type": "OUTBOUND",
+              "title": "Admin Connected",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238252",
+              "type": "INBOUND",
+              "title": "To connect",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764658242238254",
+          "tags": [],
+          "groupId": "3458764658242238396",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Admin Connection",
+          "title": "Admin Connection",
+          "fields": [
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238252",
+              "type": "OUTBOUND",
+              "title": "To connect",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Connection Admin"
+      ]
+    },
+    {
+      "id": "3458764658242238249",
+      "status": "Created",
+      "index": 3,
+      "title": "slice: Admin Connected",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764658242238263",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Admin Connected",
+          "title": "Admin Connected",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238259",
+              "type": "OUTBOUND",
+              "title": "processor Fetch Boond Companies List",
+              "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238224",
+              "type": "INBOUND",
+              "title": "List of Companies Fetched",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238222",
+              "type": "INBOUND",
+              "title": "Admin Connected",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Connection Admin"
+      ]
+    },
+    {
+      "id": "3458764658242238243",
+      "status": "Created",
+      "index": 5,
+      "title": "slice: Fetch Companies List From Boond",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764658242238261",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Fetch Companies List From Boond",
+          "title": "Mark List of Companies Fetched",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "ListOfCompanies",
+              "generated": true,
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238224",
+              "type": "OUTBOUND",
+              "title": "List of Companies Fetched",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238259",
+              "type": "INBOUND",
+              "title": "processor Fetch Boond Companies List",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764658242238224",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Fetch Companies List From Boond",
+          "title": "List of Companies Fetched",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "ListOfCompanies",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238263",
+              "type": "OUTBOUND",
+              "title": "Admin Connected",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238268",
+              "type": "OUTBOUND",
+              "title": "List Of Companies",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238261",
+              "type": "INBOUND",
+              "title": "Mark List of Companies Fetched",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [
+        {
+          "id": "3458764658242238259",
+          "tags": [],
+          "groupId": "3458764658242238397",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Fetch Companies List From Boond",
+          "title": "processor Fetch Boond Companies List",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "ListOfCompanies",
+              "generated": true,
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "idAttribute": false
+            }
+          ],
+          "type": "AUTOMATION",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238261",
+              "type": "OUTBOUND",
+              "title": "Mark List of Companies Fetched",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764658242238263",
+              "type": "INBOUND",
+              "title": "Admin Connected",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Connection Admin"
+      ]
+    },
+    {
+      "id": "3458764658242238250",
+      "status": "Created",
+      "index": 7,
+      "title": "slice: List of companies",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764658242238268",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: List of companies",
+          "title": "List Of Companies",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "ListOfCompanies",
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238273",
+              "type": "OUTBOUND",
+              "title": "Create Client Account",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238270",
+              "type": "OUTBOUND",
+              "title": "List of Companies",
+              "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238224",
+              "type": "INBOUND",
+              "title": "List of Companies Fetched",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [
+        {
+          "id": "3458764658242238270",
+          "tags": [],
+          "groupId": "3458764658242238398",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: List of companies",
+          "title": "List of Companies",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "ListOfCompanies",
+              "generated": true,
+              "type": "Custom",
+              "cardinality": "List",
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238268",
+              "type": "INBOUND",
+              "title": "List Of Companies",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        },
+        {
+          "id": "3458764658242238273",
+          "tags": [],
+          "groupId": "3458764658242238399",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: List of companies",
+          "title": "Create Client Account",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238320",
+              "type": "OUTBOUND",
+              "title": "Create Account",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764658242238268",
+              "type": "INBOUND",
+              "title": "List Of Companies",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Connection Admin"
+      ]
+    },
+    {
+      "id": "3458764658242238239",
+      "status": "Created",
+      "index": 9,
+      "title": "slice: Create Client Account",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764658242238320",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Create Client Account",
+          "title": "Create Account",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "generated": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238229",
+              "type": "OUTBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238273",
+              "type": "INBOUND",
+              "title": "Create Client Account",
+              "elementType": "SCREEN"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764658242238229",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Create Client Account",
+          "title": "Account Created",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "generated": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238324",
+              "type": "OUTBOUND",
+              "title": "Liste des comptes clients",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238283",
+              "type": "OUTBOUND",
+              "title": "invitation à envoyer",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238320",
+              "type": "INBOUND",
+              "title": "Create Account",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [
+        {
+          "id": "3458764658242238273",
+          "tags": [],
+          "groupId": "3458764658242238399",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Create Client Account",
+          "title": "Create Client Account",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "SCREEN",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238320",
+              "type": "OUTBOUND",
+              "title": "Create Account",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764658242238268",
+              "type": "INBOUND",
+              "title": "List Of Companies",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Client Account"
+      ]
+    },
+    {
+      "id": "3458764658242238248",
+      "status": "Created",
+      "index": 11,
+      "title": "slice: invitation to send",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764658242238283",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: invitation to send",
+          "title": "invitation à envoyer",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "generated": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238279",
+              "type": "OUTBOUND",
+              "title": "processor SMTP",
+              "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238230",
+              "type": "INBOUND",
+              "title": "Customer Details Email Sent",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238229",
+              "type": "INBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Client Account"
+      ]
+    },
+    {
+      "id": "3458764658242238240",
+      "status": "Created",
+      "index": 13,
+      "title": "slice: processor SMTP",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_CHANGE",
+      "commands": [
+        {
+          "id": "3458764658242238281",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: processor SMTP",
+          "title": "Mark Email Sent",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "generated": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "COMMAND",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238230",
+              "type": "OUTBOUND",
+              "title": "Customer Details Email Sent",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238279",
+              "type": "INBOUND",
+              "title": "processor SMTP",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "events": [
+        {
+          "id": "3458764658242238230",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: processor SMTP",
+          "title": "Customer Details Email Sent",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238283",
+              "type": "OUTBOUND",
+              "title": "invitation à envoyer",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238281",
+              "type": "INBOUND",
+              "title": "Mark Email Sent",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "readmodels": [],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [
+        {
+          "id": "3458764658242238279",
+          "tags": [],
+          "groupId": "3458764658242238400",
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: processor SMTP",
+          "title": "processor SMTP",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "generated": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": [],
+              "idAttribute": false
+            }
+          ],
+          "type": "AUTOMATION",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238281",
+              "type": "OUTBOUND",
+              "title": "Mark Email Sent",
+              "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764658242238283",
+              "type": "INBOUND",
+              "title": "invitation à envoyer",
+              "elementType": "READMODEL"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Client Account"
+      ]
+    },
+    {
+      "id": "3458764658242238245",
+      "status": "Created",
+      "index": 15,
+      "title": "slice: Customer Account List",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764658242238324",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Customer Account List",
+          "title": "Liste des comptes clients",
+          "fields": [
+            {
+              "name": "compteId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "entrepriseId",
+              "type": "UUID",
+              "mapping": "entrepriseListe",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238229",
+              "type": "INBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Client Account"
+      ]
+    }
+  ],
+  "flows": [],
+  "aggregates": [
+    {
+      "id": "3458764658242238223",
+      "title": "Connection Admin",
+      "fields": [],
+      "type": "AGGREGATE"
+    },
+    {
+      "id": "3458764658242238227",
+      "title": "Client Account",
+      "fields": [],
+      "type": "AGGREGATE"
+    }
+  ],
+  "actors": [],
+  "context": "Socraft Client Web Portal",
+  "codeGen": {
+    "application": "WebPortal",
+    "rootPackage": "boond",
+    "contextPackage": "projects"
+  },
+  "boardId": "uXjVIKUE2jo=",
+  "sliceGroups": [],
+  "sliceImages": [],
+  "sliceLayouts": []
+}

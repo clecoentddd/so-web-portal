@@ -1,0 +1,68 @@
+{
+  "slices": [
+    {
+      "id": "3458764658242238242",
+      "slice": "slice: Admin Connection",
+      "index": 1,
+      "context": "Socraft Client Web Portal",
+      "folder": "adminconnection",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238249",
+      "slice": "slice: Admin Connected",
+      "index": 3,
+      "context": "Socraft Client Web Portal",
+      "folder": "adminconnected",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238243",
+      "slice": "slice: Fetch Companies List From Boond",
+      "index": 5,
+      "context": "Socraft Client Web Portal",
+      "folder": "fetchcompanieslistfromboond",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238250",
+      "slice": "slice: List of companies",
+      "index": 7,
+      "context": "Socraft Client Web Portal",
+      "folder": "listofcompanies",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238239",
+      "slice": "slice: Create Client Account",
+      "index": 9,
+      "context": "Socraft Client Web Portal",
+      "folder": "createclientaccount",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238248",
+      "slice": "slice: invitation to send",
+      "index": 11,
+      "context": "Socraft Client Web Portal",
+      "folder": "invitationtosend",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238240",
+      "slice": "slice: processor SMTP",
+      "index": 13,
+      "context": "Socraft Client Web Portal",
+      "folder": "processorsmtp",
+      "status": "Created"
+    },
+    {
+      "id": "3458764658242238245",
+      "slice": "slice: Customer Account List",
+      "index": 15,
+      "context": "Socraft Client Web Portal",
+      "folder": "customeraccountlist",
+      "status": "Created"
+    }
+  ]
+}
