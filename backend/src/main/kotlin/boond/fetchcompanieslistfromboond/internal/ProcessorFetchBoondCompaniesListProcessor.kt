@@ -27,9 +27,9 @@ class ProcessorFetchBoondCompaniesListProcessor : Processor {
 
     // 2. Map to our new shared CompanyInfo class
     val companiesList =
-            companiesInfo.companies.map {
-              CompanyInfo(companyId = it.companyId, companyName = it.companyName)
-            }
+        companiesInfo.companies.map {
+          CompanyInfo(companyId = it.companyId, companyName = it.companyName)
+        }
 
     logger.info {
       "Sending MarkListOfCompaniesFetchedCommand for connection: ${event.connectionId} with ${companiesList.size} companies"
@@ -37,11 +37,9 @@ class ProcessorFetchBoondCompaniesListProcessor : Processor {
 
     // 3. Send the command with corrected property name (listOfCompanies)
     commandGateway.send<Any>(
-            MarkListOfCompaniesFetchedCommand(
-                    connectionId = event.connectionId, // Ensure non-null from event
-                    adminEmail = event.adminEmail,
-                    listOfCompanies = companiesList
-            )
-    )
+        MarkListOfCompaniesFetchedCommand(
+            connectionId = event.connectionId, // Ensure non-null from event
+            adminEmail = event.adminEmail,
+            listOfCompanies = companiesList))
   }
 }

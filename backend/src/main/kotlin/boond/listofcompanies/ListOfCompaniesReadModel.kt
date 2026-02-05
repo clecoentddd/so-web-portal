@@ -15,22 +15,22 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 class ListOfCompaniesReadModel : ReadModel {
 
-   var connectionId: UUID? = null
-   var adminEmail: String? = null
-   var listOfCompanies: MutableList<CompanyInfo> = mutableListOf()
+  var connectionId: UUID? = null
+  var adminEmail: String? = null
+  var listOfCompanies: MutableList<CompanyInfo> = mutableListOf()
 
-   fun applyEvents(events: List<Event>): ListOfCompaniesReadModel {
+  fun applyEvents(events: List<Event>): ListOfCompaniesReadModel {
 
-      events.forEach { event ->
-         when (event) {
-            is ListOfCompaniesFetchedEvent -> {
-               connectionId = event.connectionId
-               adminEmail = event.adminEmail
-               listOfCompanies = event.listOfCompanies.toMutableList()
-            }
-         }
+    events.forEach { event ->
+      when (event) {
+        is ListOfCompaniesFetchedEvent -> {
+          connectionId = event.connectionId
+          adminEmail = event.adminEmail
+          listOfCompanies = event.listOfCompanies.toMutableList()
+        }
       }
+    }
 
-      return this
-   }
+    return this
+  }
 }
