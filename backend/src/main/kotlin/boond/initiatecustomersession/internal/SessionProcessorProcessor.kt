@@ -1,6 +1,7 @@
 package boond.initiatecustomersession.internal
 
 import boond.common.Processor
+import boond.customeraccountlist.internal.CustomerAccountListReadModelRepository
 import boond.domain.commands.initiatecustomersession.InitiateSessionCommand
 import boond.events.CustomerConnectedEvent
 import java.util.UUID
@@ -10,7 +11,10 @@ import org.axonframework.eventhandling.EventHandler
 import org.springframework.stereotype.Component
 
 @Component
-class SessionProcessorProcessor(private val commandGateway: CommandGateway) : Processor {
+class SessionProcessorProcessor(
+    private val commandGateway: CommandGateway,
+    private val repository: CustomerAccountListReadModelRepository
+) : Processor {
 
   private val logger = KotlinLogging.logger {}
 
@@ -22,6 +26,23 @@ class SessionProcessorProcessor(private val commandGateway: CommandGateway) : Pr
       logger.error {
         "Aborting: Received invalid companyId (${event.companyId}) for customer ${event.customerId}"
       }
+      return
+    }
+
+    // We query the Account Projection to ensure this pair is valid
+    val isAuthorized = repository.existsByCustomerIdAndCompanyId(event.customerId, event.companyId)
+
+    if (!isAuthorized) {
+      // This is where Ghost Event 556 (Company 790) gets killed!
+      logger.warn {
+        "Unauthorized Session Attempt: Customer ${event.customerId} tried to connect to Company ${event.companyId}, but their account is tied to a different company."
+      }
+      return // Stop the flow. No command is sent.
+    }
+
+    // 3. Normal business logic
+    if (event.companyId <= 0) {
+      logger.error { "Aborting: Received invalid companyId (${event.companyId})" }
       return
     }
 

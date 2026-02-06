@@ -55,7 +55,7 @@ data class BoondCompanyInformations(val revenue: Double, val employeesCount: Int
 // --- The Adapter ---
 
 @Component
-class FetchBoondAPIListeDesCompanies(
+class FetchBoondAPICompanyList(
     @Value("\${boond.api.base-url}") private val baseUrl: String,
     @Value("\${boond.api.token}") private val apiToken: String
 ) {

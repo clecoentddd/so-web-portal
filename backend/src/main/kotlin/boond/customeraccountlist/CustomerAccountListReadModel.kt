@@ -18,3 +18,7 @@ class CustomerAccountListReadModelEntity {
 }
 
 data class CustomerAccountListReadModel(val data: List<CustomerAccountListReadModelEntity>)
+
+data class CustomerAccountLookupQuery(val customerId: UUID)
+
+data class CustomerAccountLookupReadModel(val customerId: UUID, val companyId: Long)

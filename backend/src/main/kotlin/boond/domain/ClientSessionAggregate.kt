@@ -1,7 +1,9 @@
 package boond.domain
 
+import boond.domain.commands.fetchprojectslistfromboond.MarkListOfProjectsFetchedCommand
 import boond.domain.commands.initiatecustomersession.InitiateSessionCommand
 import boond.events.CustomerSessionInitiatedEvent
+import boond.events.ListOfProjectsFetchedEvent
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -33,5 +35,23 @@ class SessionAggregate() {
   fun on(event: CustomerSessionInitiatedEvent) {
     this.sessionId = event.sessionId
     this.isActive = true
+  }
+
+  // List of projects
+  @CommandHandler
+  fun handle(command: MarkListOfProjectsFetchedCommand) {
+
+    AggregateLifecycle.apply(
+        ListOfProjectsFetchedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId,
+            projectList = command.projectList))
+  }
+
+  @EventSourcingHandler
+  fun on(event: ListOfProjectsFetchedEvent) {
+    // handle event
+    sessionId = event.sessionId
   }
 }
