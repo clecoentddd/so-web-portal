@@ -40,10 +40,10 @@
         },
         {
           "name": "customerId",
-          "generated": true,
           "type": "UUID",
-          "cardinality": "Single",
+          "generated": true,
           "subfields": [],
+          "cardinality": "Single",
           "idAttribute": false
         }
       ],
@@ -187,10 +187,10 @@
         },
         {
           "name": "customerId",
-          "generated": true,
           "type": "UUID",
-          "cardinality": "Single",
+          "generated": true,
           "subfields": [],
+          "cardinality": "Single",
           "idAttribute": false
         }
       ],

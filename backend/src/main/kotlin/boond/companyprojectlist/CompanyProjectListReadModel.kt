@@ -24,7 +24,6 @@ class CompanyProjectListReadModelEntity {
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
       name = "projection_session_projects", joinColumns = [JoinColumn(name = "session_id")])
-  // FIX: Use mutableListOf() instead of emptyList()
   var projectList: MutableList<ProjectInfo> = mutableListOf()
 }
 
@@ -39,7 +38,6 @@ class CompanyProjectListReadModel : ReadModel {
   var companyId: Long? = null
   var customerId: UUID? = null
 
-  // Updated from String to ProjectInfo to match your domain
   var projectList: List<ProjectInfo> = emptyList()
 
   fun applyEvents(events: List<Event>): CompanyProjectListReadModel {
@@ -49,11 +47,16 @@ class CompanyProjectListReadModel : ReadModel {
           this.sessionId = event.sessionId
           this.companyId = event.companyId
           this.customerId = event.customerId
-          // Directly assign the list from the event
           this.projectList = event.projectList
         }
       }
     }
+    return this
+  }
+
+  fun applyEventsFiltered(events: List<Event>, projectId: Long): CompanyProjectListReadModel {
+    this.applyEvents(events)
+    this.projectList = this.projectList.filter { it.projectId == projectId }
     return this
   }
 }

@@ -5,7 +5,8 @@ import java.time.LocalDate
 
 @Embeddable
 data class ProjectInfo(
-    var projectId: String = "",
+    var projectId: Long = 0,
+    var reference: String = "",
     var projectTitle: String = "",
     var projectDescription: String = "",
     var startDate: LocalDate? = null,

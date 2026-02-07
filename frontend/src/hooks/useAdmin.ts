@@ -11,10 +11,17 @@ export interface CompanyInfo {
   companyName: string;
 }
 
+export interface ProjectInfo {
+  projectId: number;
+  projectName: string;
+  projectDescription: string;
+}
+
 export const useAdmin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [companies, setCompanies] = useState<CompanyInfo[]>([]);
+  const [projects, setProjects] = useState<ProjectInfo[]>([]);
 
   /**
    * ADMIN: Connects and returns connectionId
@@ -35,29 +42,56 @@ export const useAdmin = () => {
   };
 
   /**
-   * CUSTOMER: Connects using UUID and Email
-   * Matches your Backend: @PostMapping("/clientaccountconnection/{id}")
+   * CUSTOMER: The "Waterfall" discovery flow
+   * Now includes automatic company resolution.
    */
-  const customerConnect = async (customerId: string, clientEmail: string): Promise<void> => {
+  const customerConnect = async (customerId: string, email: string) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/clientaccountconnection/${customerId}`, {
+      // 1. Resolve Company ID first
+      const companyId = await adminService.getCompanyForCustomer(customerId);
+
+      // 2. Fire the connection command
+      const authResponse = await fetch(`http://localhost:8080/clientaccountconnection/${customerId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ clientEmail })
+        body: JSON.stringify({ clientEmail: email }),
       });
 
-      if (!response.ok) {
-        // This handles your CommandException from the Aggregate
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Access Denied: Invalid credentials');
+      if (!authResponse.ok) {
+        const errorText = await authResponse.text();
+        throw new Error(`Connection failed: ${authResponse.status} ${errorText}`);
       }
 
-      // Success (200 OK with empty body)
+      // Return the resolved companyId so App.tsx knows what to poll with
+      return { success: true, companyId };
     } catch (err: any) {
-      setError(err.message);
+      console.error("[Hook Log] Customer Connect Error:", err);
+      setError(err.message || "Failed to resolve account or connect.");
       throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * FETCH PROJECTS: Gets the projects from the JPA projection
+   */
+  const fetchProjects = async (sessionId: string) => {
+    setLoading(true);
+    console.log(`[Hook Log] Requesting: http://localhost:8080/companyprojectlist/${sessionId}`);
+    try {
+      const response = await fetch(`http://localhost:8080/companyprojectlist/${sessionId}`);
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+      const data = await response.json();
+      console.log("[Hook Log] Received Projection Data:", data);
+
+      setProjects(data.projectList || []);
+    } catch (err: any) {
+      console.error("[Hook Log] Fetch Error:", err);
+      setError("Failed to load project list.");
     } finally {
       setLoading(false);
     }
@@ -109,10 +143,12 @@ export const useAdmin = () => {
 
   return {
     connect,
-    customerConnect, // New function exported
+    customerConnect,
     createAccount,
     fetchCompanies,
+    fetchProjects,
     companies,
+    projects,
     loading,
     error
   };

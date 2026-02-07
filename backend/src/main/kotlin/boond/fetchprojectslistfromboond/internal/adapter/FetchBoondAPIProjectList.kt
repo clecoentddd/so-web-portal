@@ -8,7 +8,8 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 
 data class Projet(
-    val projetId: String, // mapped from reference
+    val projectId: Long, // mapped from reference
+    val reference: String, // mapped from reference
     val projectTitle: String, // mapped from title
     val projetDescription: String,
     val startDate: String?,
@@ -144,7 +145,8 @@ class FetchBoondAPIProjectList(
                 "Mapping project ${it.attributes.reference} with manager: ${manager?.firstName} ${manager?.lastName}")
 
             Projet(
-                projetId = it.attributes.reference ?: it.id.toString(),
+                projectId = it.id,
+                reference = it.attributes.reference ?: "",
                 projectTitle = it.attributes.title,
                 projetDescription = it.attributes.description ?: "",
                 startDate = it.attributes.startDate,

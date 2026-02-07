@@ -37,7 +37,8 @@ class ProcessorFetchBoondProjectsListProcessor(
     val projectsList: List<ProjectInfo> =
         response.projets.map { p: Projet ->
           ProjectInfo(
-              projectId = p.projetId,
+              projectId = p.projectId,
+              reference = p.reference,
               projectTitle = p.projectTitle,
               projectDescription = p.projetDescription,
               startDate = p.startDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },

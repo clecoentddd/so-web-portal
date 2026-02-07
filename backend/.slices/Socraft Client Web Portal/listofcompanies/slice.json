@@ -1,6 +1,6 @@
 {
   "id": "3458764658242238250",
-  "status": "Created",
+  "status": "Done",
   "title": "slice: List of companies",
   "context": "Socraft Client Web Portal",
   "sliceType": "STATE_VIEW",
@@ -33,7 +33,6 @@
         {
           "name": "ListOfCompanies",
           "type": "Custom",
-          "cardinality": "List",
           "subfields": [
             {
               "name": "companyId",
@@ -46,6 +45,7 @@
               "cardinality": "Single"
             }
           ],
+          "cardinality": "List",
           "idAttribute": false
         }
       ],
@@ -110,9 +110,8 @@
         },
         {
           "name": "ListOfCompanies",
-          "generated": true,
           "type": "Custom",
-          "cardinality": "List",
+          "generated": true,
           "subfields": [
             {
               "name": "companyId",
@@ -125,6 +124,7 @@
               "cardinality": "Single"
             }
           ],
+          "cardinality": "List",
           "idAttribute": false
         }
       ],

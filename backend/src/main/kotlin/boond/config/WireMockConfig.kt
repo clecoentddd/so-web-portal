@@ -104,15 +104,38 @@ class WireMockConfig(
                     .withBodyFile("boond/invoices.json")))
 
     // Orders endpoint
+    // Orders endpoint - Company 789
     wireMockServer.stubFor(
         WireMock.get(WireMock.urlPathEqualTo("/api/v1/orders"))
+            .withQueryParam("companies", WireMock.equalTo("789"))
             .withHeader("Authorization", WireMock.matching("Bearer .*"))
             .willReturn(
                 WireMock.aResponse()
                     .withStatus(200)
                     .withHeader("Content-Type", "application/json")
-                    .withBodyFile("boond/orders.json")))
+                    .withBodyFile("boond/orders-789.json")))
 
+    // Orders endpoint - Company 790
+    wireMockServer.stubFor(
+        WireMock.get(WireMock.urlPathEqualTo("/api/v1/orders"))
+            .withQueryParam("companies", WireMock.equalTo("790"))
+            .withHeader("Authorization", WireMock.matching("Bearer .*"))
+            .willReturn(
+                WireMock.aResponse()
+                    .withStatus(200)
+                    .withHeader("Content-Type", "application/json")
+                    .withBodyFile("boond/orders-790.json")))
+
+    // Orders endpoint - Company 791
+    wireMockServer.stubFor(
+        WireMock.get(WireMock.urlPathEqualTo("/api/v1/orders"))
+            .withQueryParam("companies", WireMock.equalTo("791"))
+            .withHeader("Authorization", WireMock.matching("Bearer .*"))
+            .willReturn(
+                WireMock.aResponse()
+                    .withStatus(200)
+                    .withHeader("Content-Type", "application/json")
+                    .withBodyFile("boond/orders-791.json")))
     // Reporting Projects endpoint
     wireMockServer.stubFor(
         WireMock.get(WireMock.urlPathEqualTo("/api/v1/reportingProjects"))

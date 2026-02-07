@@ -1,6 +1,6 @@
 {
   "id": "3458764658242238243",
-  "status": "Created",
+  "status": "Done",
   "title": "slice: Fetch Companies List From Boond",
   "context": "Socraft Client Web Portal",
   "sliceType": "STATE_CHANGE",
@@ -30,9 +30,8 @@
         },
         {
           "name": "ListOfCompanies",
-          "generated": true,
           "type": "Custom",
-          "cardinality": "List",
+          "generated": true,
           "subfields": [
             {
               "name": "companyId",
@@ -45,6 +44,7 @@
               "cardinality": "Single"
             }
           ],
+          "cardinality": "List",
           "idAttribute": false
         }
       ],
@@ -128,15 +128,15 @@
       ],
       "dependencies": [
         {
-          "id": "3458764658242238263",
-          "type": "OUTBOUND",
-          "title": "Admin Connected",
-          "elementType": "READMODEL"
-        },
-        {
           "id": "3458764658242238268",
           "type": "OUTBOUND",
           "title": "List Of Companies",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238263",
+          "type": "OUTBOUND",
+          "title": "Admin Connected",
           "elementType": "READMODEL"
         },
         {
@@ -185,9 +185,8 @@
         },
         {
           "name": "ListOfCompanies",
-          "generated": true,
           "type": "Custom",
-          "cardinality": "List",
+          "generated": true,
           "subfields": [
             {
               "name": "companyId",
@@ -200,6 +199,7 @@
               "cardinality": "Single"
             }
           ],
+          "cardinality": "List",
           "idAttribute": false
         }
       ],
