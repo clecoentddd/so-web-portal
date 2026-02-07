@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 data class RequestProjectDetailsPayload(
     var companyId: Long,
     var customerId: UUID,
-    var projectId: String
+    var projectId: Long
 )
 
 /*
@@ -31,7 +31,7 @@ class RequestProjectDetailsResource(private var commandGateway: CommandGateway) 
   fun processDebugCommand(
       @RequestParam companyId: Long,
       @RequestParam customerId: UUID,
-      @RequestParam projectId: String,
+      @RequestParam projectId: Long,
       @RequestParam sessionId: UUID
   ): CompletableFuture<Any> {
     return commandGateway.send(

@@ -41,16 +41,24 @@ export function CustomerDashboard({
   onBackToWelcome,
 }: CustomerDashboardProps) {
   const { requestProjectDetails, loading: requestLoading } = useAdmin()
-  const { getProjectOrders, orders: projectOrders, loading: ordersLoading, error: ordersError } = useOrders()
+  const { fetchSessionData, allOrders, allInvoices, loading: ordersLoading, error: ordersError } = useOrders()
   const [requestedProjects, setRequestedProjects] = useState<Record<number, boolean>>({})
   const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
   const [selectedProjectTitle, setSelectedProjectTitle] = useState("")
+  const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
 
   const handleRequestDetails = async (project: Project) => {
     setSelectedProjectTitle(project.projectTitle)
+    setSelectedProjectId(project.projectId)
     setIsOrdersModalOpen(true)
-    await getProjectOrders(sessionId, project.projectId, compId, customerId)
+    // Fetch (or poll) data for the whole session. 
+    // The hook handles the polling loop.
+    await fetchSessionData(sessionId, compId, customerId)
   }
+
+  // Client-side Join: Filter global state by the selected project
+  const projectOrders = selectedProjectId ? allOrders.filter(o => o.projectId === selectedProjectId) : []
+  const projectInvoices = selectedProjectId ? allInvoices.filter(i => i.projectId === selectedProjectId) : []
 
   if (dashboardMode === "WELCOME") {
     return (
@@ -224,6 +232,7 @@ export function CustomerDashboard({
         error={ordersError}
         projectTitle={selectedProjectTitle}
         orders={projectOrders}
+        invoices={projectInvoices}
       />
     </div >
   )

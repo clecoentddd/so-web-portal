@@ -1,10 +1,12 @@
 package boond.domain
 
+import boond.domain.commands.fetchinvoices.MarkInvoicesFetchedCommand
 import boond.domain.commands.fetchorders.MarkOrdersFetchedCommand
 import boond.domain.commands.fetchprojectslistfromboond.MarkListOfProjectsFetchedCommand
 import boond.domain.commands.initiatecustomersession.InitiateSessionCommand
 import boond.domain.commands.requestprojectdetails.RequestProjectDetailsCommand
 import boond.events.CustomerSessionInitiatedEvent
+import boond.events.InvoicesFetchedEvent
 import boond.events.ListOfProjectsFetchedEvent
 import boond.events.OrdersFetchedEvent
 import boond.events.ProjectDetailsRequestedEvent
@@ -31,10 +33,12 @@ class SessionAggregate() {
     // Semantic validation can happen here if needed
 
     AggregateLifecycle.apply(
-        CustomerSessionInitiatedEvent(
-            sessionId = command.sessionId,
-            companyId = command.companyId,
-            customerId = command.customerId))
+            CustomerSessionInitiatedEvent(
+                    sessionId = command.sessionId,
+                    companyId = command.companyId,
+                    customerId = command.customerId
+            )
+    )
   }
 
   @EventSourcingHandler
@@ -53,11 +57,13 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-        ListOfProjectsFetchedEvent(
-            sessionId = command.sessionId,
-            companyId = command.companyId,
-            customerId = command.customerId,
-            projectList = command.projectList))
+            ListOfProjectsFetchedEvent(
+                    sessionId = command.sessionId,
+                    companyId = command.companyId,
+                    customerId = command.customerId,
+                    projectList = command.projectList
+            )
+    )
   }
 
   @EventSourcingHandler
@@ -73,11 +79,13 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-        ProjectDetailsRequestedEvent(
-            sessionId = command.sessionId,
-            companyId = command.companyId,
-            customerId = command.customerId,
-            projectId = command.projectId))
+            ProjectDetailsRequestedEvent(
+                    sessionId = command.sessionId,
+                    companyId = command.companyId,
+                    customerId = command.customerId,
+                    projectId = command.projectId
+            )
+    )
   }
 
   @EventSourcingHandler
@@ -93,15 +101,39 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-        OrdersFetchedEvent(
-            sessionId = command.sessionId,
-            companyId = command.companyId,
-            customerId = command.customerId,
-            orderList = command.orderList))
+            OrdersFetchedEvent(
+                    sessionId = command.sessionId,
+                    companyId = command.companyId,
+                    customerId = command.customerId,
+                    orderList = command.orderList
+            )
+    )
   }
 
   @EventSourcingHandler
   fun on(event: OrdersFetchedEvent) {
+    // handle event
+    sessionId = event.sessionId
+  }
+
+  // List of invoices
+  @CommandHandler
+  fun handle(command: MarkInvoicesFetchedCommand) {
+    check(command.companyId == this.companyId) { "companyId mismatch" }
+    check(command.customerId == this.customerId) { "customerId mismatch" }
+
+    AggregateLifecycle.apply(
+            InvoicesFetchedEvent(
+                    sessionId = command.sessionId,
+                    companyId = command.companyId,
+                    customerId = command.customerId,
+                    invoiceList = command.invoiceList
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(event: InvoicesFetchedEvent) {
     // handle event
     sessionId = event.sessionId
   }

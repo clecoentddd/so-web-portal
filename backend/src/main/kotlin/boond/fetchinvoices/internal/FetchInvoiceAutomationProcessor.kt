@@ -1,47 +1,54 @@
 package boond.fetchinvoices.internal
 
-import boond.companyorderlist.CompanyOrderListReadModel
-import boond.companyorderlist.CompanyOrderListReadModelQuery
 import boond.common.Processor
-import org.axonframework.commandhandling.gateway.CommandGateway
-import org.axonframework.queryhandling.QueryGateway
+import boond.domain.commands.fetchinvoices.MarkInvoicesFetchedCommand
+import boond.events.ListOfProjectsFetchedEvent
+import boond.fetchorder.internal.adapter.FetchBoondAPIInvoiceList
 import mu.KotlinLogging
-import org.springframework.stereotype.Component
-import org.springframework.beans.factory.annotation.Autowired
+import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventhandling.EventHandler
-import boond.domain.commands.fetchinvoices.MarquerFactureRecupereeCommand
-import java.util.UUID;
-import kotlin.collections.List;
-
-import boond.events.OrdersFetchedEvent
+import org.springframework.stereotype.Component
 
 /*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764658242238311
+Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764658242238373
 */
 @Component
-class FetchInvoiceAutomationProcessor: Processor {
-   var logger = KotlinLogging.logger {}
+class FetchInvoiceAutomationProcessor(
+    private val commandGateway: CommandGateway,
+    private val boondAdapter: FetchBoondAPIInvoiceList
+) : Processor {
 
-     @Autowired
-     lateinit var commandGateway: CommandGateway
-     @Autowired
-     lateinit var queryGateway: QueryGateway
+  private val logger = KotlinLogging.logger {}
 
+  @EventHandler
+  fun on(event: ListOfProjectsFetchedEvent) {
+    logger.info {
+      "Project list fetched for company ${event.companyId}. Fetching all Invoices from Boond..."
+    }
 
-                @EventHandler
-                fun on(event: OrdersFetchedEvent) {
-                     queryGateway.query(
-            CompanyOrderListReadModelQuery(event.aggregateId),
-            CompanyOrderListReadModel::class.java
-        ).thenAccept {
-                /*commandGateway.send<MarquerFactureRecupereeCommand>(
-                    MarquerFactureRecupereeCommand(
-                      			sessionId=it.sessionId
-			companyId=it.companyId
-			customerId=it.customerId)
-                )*/
+    // 1. Fetch the data from the adapter (company-wide, no projectId)
+    val InvoicesInfo = boondAdapter.fetch(companyId = event.companyId)
+
+    logger.info { "Fetched ${InvoicesInfo.invoices.size} Invoices for company ${event.companyId}" }
+
+    // 2. Dispatch the command with the full list
+    commandGateway
+        .send<Any>(
+            MarkInvoicesFetchedCommand(
+                sessionId = event.sessionId,
+                companyId = event.companyId,
+                customerId = event.customerId,
+                invoiceList = InvoicesInfo.invoices))
+        .exceptionally { throwable ->
+          logger.error(throwable) {
+            "FAILED to mark Invoices fetched for session ${event.sessionId}. " +
+                "Reason: ${throwable.message}"
+          }
+          null
         }
-                }
 
+    logger.info {
+      "Successfully dispatched MarkInvoicesFetchedCommand for session ${event.sessionId} (${InvoicesInfo.invoices.size} Invoices)"
+    }
+  }
 }
-

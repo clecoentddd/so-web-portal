@@ -10,13 +10,13 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 data class RequestProjectDetailsCommand(
     var companyId: Long,
     var customerId: UUID,
-    var projectId: String,
+    var projectId: Long,
     @TargetAggregateIdentifier var sessionId: UUID
 ) : Command {
   init {
     require(companyId != 0L) { "companyId is required" }
     require(customerId != UUID(0, 0)) { "customerId is required" }
-    require(projectId.isNotBlank()) { "projectId is required" }
+    require(projectId != 0L) { "projectId is required" }
     require(sessionId != UUID(0, 0)) { "sessionId is required" }
   }
 }

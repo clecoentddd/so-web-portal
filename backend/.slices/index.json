@@ -142,14 +142,14 @@
       "index": 35,
       "context": "Socraft Client Web Portal",
       "folder": "fetchinvoices",
-      "status": "InProgress"
+      "status": "Done"
     },
     {
       "id": "3458764658242238217",
-      "slice": "slice: reconciliation Liste des Factures",
+      "slice": "slice: Company Invoices",
       "index": 37,
       "context": "Socraft Client Web Portal",
-      "folder": "reconciliationlistedesfactures",
+      "folder": "companyinvoices",
       "status": "InProgress"
     }
   ]

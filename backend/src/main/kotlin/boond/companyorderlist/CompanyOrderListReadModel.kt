@@ -19,11 +19,11 @@ class CompanyOrderListReadModelEntity {
 
   @Column(name = "company_id") var companyId: Long? = null
 
-  @Column(name = "customer_id") var customerId: UUID? = null
-
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-      name = "companyorderlist_order_items", joinColumns = [JoinColumn(name = "session_id")])
+          name = "companyorderlist_order_items",
+          joinColumns = [JoinColumn(name = "session_id")]
+  )
   var orderList: MutableList<OrderInfo> = mutableListOf()
 }
 
@@ -31,6 +31,5 @@ class CompanyOrderListReadModelEntity {
 class CompanyOrderListReadModel(entity: CompanyOrderListReadModelEntity) {
   var sessionId: UUID? = entity.sessionId
   var companyId: Long? = entity.companyId
-  var customerId: UUID? = entity.customerId
   var orderList: MutableList<OrderInfo> = entity.orderList.toMutableList()
 }

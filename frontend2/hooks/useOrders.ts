@@ -1,74 +1,81 @@
 import { useState } from 'react';
-import { orderService, type OrderInfo } from '../app/api/orderService';
+import { orderService, type OrderInfo, type InvoiceInfo, type FetchOrdersPayload } from '../app/api/orderService';
 
 export const useOrders = () => {
-    const [orders, setOrders] = useState<OrderInfo[]>([]);
+    const [allOrders, setAllOrders] = useState<OrderInfo[]>([]);
+    const [allInvoices, setAllInvoices] = useState<InvoiceInfo[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const getProjectOrders = async (sessionId: string, projectId: number, companyId: number, customerId: string) => {
+    const fetchSessionData = async (sessionId: string, companyId: number, customerId: string) => {
         setLoading(true);
         setError(null);
-        setOrders([]);
+        setAllOrders([]);
+        setAllInvoices([]);
 
         try {
-            // Step 1: Query the Read Model
-            console.log(`[useOrders] Querying Read Model for Project ${projectId}...`);
-            let data = await orderService.getOrders(sessionId, projectId, companyId);
+            // Step 1: Initial Query to check if data exists
+            console.log(`[useOrders] Checking existing data for session ${sessionId}...`);
+            const initialOrders = await orderService.fetchAllOrders(sessionId);
+            const initialInvoices = await orderService.fetchAllInvoices(sessionId);
 
-            if (data && data.length > 0) {
-                console.log(`[useOrders] Data found in Read Model.`);
-                setOrders(data);
-                return;
+            if (initialOrders.length > 0 || initialInvoices.length > 0) {
+                console.log(`[useOrders] Data found immediately.`);
+                setAllOrders(initialOrders);
+                setAllInvoices(initialInvoices);
+                setLoading(false); // Show data immediately
+                // Even if found, we might want to continue polling if the process is ongoing,
+                // but for now, if data is missing, we definitely trigger the command.
             }
 
-            // Step 2: If Data is missing (null or empty), Trigger Command
-            console.log(`[useOrders] Data not found. Triggering Fetch Command...`);
-            await orderService.fetchOrders(sessionId, {
-                sessionId,
-                companyId,
-                customerId,
-                orders: []
-            });
-
-            // Step 3: Poll for data
-            console.log(`[useOrders] Command sent. Polling for results...`);
-
-            // Simple polling logic: Try 3 times with 2s delay
-            const MAX_RETRIES = 5;
-            const DELAY_MS = 2000;
-
-            for (let i = 0; i < MAX_RETRIES; i++) {
-                await new Promise(resolve => setTimeout(resolve, DELAY_MS));
-
-                console.log(`[useOrders] Polling attempt ${i + 1}...`);
-                data = await orderService.getOrders(sessionId, projectId, companyId);
-
-                if (data && data.length > 0) {
-                    console.log(`[useOrders] Data retrieved after polling.`);
-                    setOrders(data);
-                    return;
-                }
+            if (initialOrders.length === 0 && initialInvoices.length === 0) {
+                // Step 2: If Data is missing, Trigger Command to start backend fetch
+                console.log(`[useOrders] No data found. Triggering Fetch Command...`);
+                const payload: FetchOrdersPayload = {
+                    sessionId,
+                    companyId,
+                    customerId,
+                    orders: []
+                };
+                await orderService.fetchOrders(sessionId, payload);
             }
 
-            // If we reach here, we didn't get data in time. 
-            // Depending on requirements, we can show an empty list or an error, 
-            // or just leave it empty if there really are no orders.
-            console.log(`[useOrders] Polling finished. No orders found (or timeout).`);
-            setOrders([]);
+            // Step 3: Poll for data in a loop
+            console.log(`[useOrders] Starting 3-second polling loop...`);
+
+            // We loop for a fixed number of attempts to simulate "while user is active" 
+            // without creating an infinite loop that can't be stopped easily in this function scope.
+            // 20 attempts * 3 seconds = 60 seconds of active polling.
+            const MAX_POLLS = 20;
+            const POLL_INTERVAL_MS = 3000;
+
+            for (let i = 0; i < MAX_POLLS; i++) {
+                await new Promise(resolve => setTimeout(resolve, POLL_INTERVAL_MS));
+
+                console.log(`[useOrders] Polling attempt ${i + 1}/${MAX_POLLS}...`);
+                const orders = await orderService.fetchAllOrders(sessionId);
+                const invoices = await orderService.fetchAllInvoices(sessionId);
+
+                setAllOrders(orders);
+                setAllInvoices(invoices);
+
+                // Stop loading spinner after first poll so user sees the data (or empty state)
+                setLoading(false);
+            }
 
         } catch (err: any) {
             console.error(`[useOrders] Error:`, err);
-            setError("Failed to load orders. Please try again.");
+            setError(err.response?.data?.message || "An unexpected error occurred while fetching orders.");
         } finally {
             setLoading(false);
         }
     };
 
     return {
-        orders,
+        allOrders,
+        allInvoices,
         loading,
         error,
-        getProjectOrders
+        fetchSessionData
     };
 };

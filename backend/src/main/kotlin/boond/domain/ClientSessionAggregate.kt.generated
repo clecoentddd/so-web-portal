@@ -1,0 +1,44 @@
+package boond.domain
+
+import org.axonframework.modelling.command.AggregateIdentifier
+import org.axonframework.spring.stereotype.Aggregate
+import org.axonframework.commandhandling.CommandHandler
+import org.axonframework.eventsourcing.EventSourcingHandler
+import org.axonframework.modelling.command.AggregateLifecycle
+import org.axonframework.modelling.command.AggregateCreationPolicy
+import org.axonframework.modelling.command.CreationPolicy
+
+import java.util.UUID
+
+import boond.domain.commands.fetchinvoices.MarquerFactureRecupereeCommand
+import boond.events.FactureRecupereeEvent
+
+@Aggregate
+class ClientSessionAggregate {
+
+    @AggregateIdentifier
+    var aggregateId:java.util.UUID? = null
+
+    
+            
+    
+        @CommandHandler
+        fun handle(command: MarquerFactureRecupereeCommand) {
+           
+               AggregateLifecycle.apply(FactureRecupereeEvent(			sessionId=command.sessionId,
+			companyId=command.companyId,
+			customerId=command.customerId,
+			invoiceList=command.invoiceList))
+               
+        }
+        
+        
+        @EventSourcingHandler
+        fun on(event: FactureRecupereeEvent){
+        // handle event
+            
+        }
+        
+
+
+}
