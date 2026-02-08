@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useAdmin } from "@/hooks/useAdmin"
 import { useOrders } from "@/hooks/useOrders"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { OrdersModal } from "./orders-modal"
 
 interface Project {
@@ -17,10 +17,12 @@ interface Project {
   endDate?: string
   forecastEndDate?: string
   status: string
+  manager: string
 }
 
 interface CustomerDashboardProps {
   compId: number
+  companyName: string
   sessionId: string
   customerId: string
   dashboardMode: "WELCOME" | "LIST"
@@ -32,6 +34,7 @@ interface CustomerDashboardProps {
 
 export function CustomerDashboard({
   compId,
+  companyName,
   sessionId,
   customerId,
   dashboardMode,
@@ -40,15 +43,32 @@ export function CustomerDashboard({
   onAccessProjects,
   onBackToWelcome,
 }: CustomerDashboardProps) {
-  const { requestProjectDetails, loading: requestLoading } = useAdmin()
+  console.log("[CustomerDashboard] Rendered. Props:", { compId, companyName, sessionId, customerId });
+
+  const { requestProjectDetails, resolveCompany, loading: requestLoading } = useAdmin()
   const { fetchSessionData, allOrders, allInvoices, loading: ordersLoading, error: ordersError } = useOrders()
   const [requestedProjects, setRequestedProjects] = useState<Record<number, boolean>>({})
   const [isOrdersModalOpen, setIsOrdersModalOpen] = useState(false)
   const [selectedProjectTitle, setSelectedProjectTitle] = useState("")
   const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null)
+  const [selectedProjectManager, setSelectedProjectManager] = useState("")
+  const [displayName, setDisplayName] = useState(companyName)
+
+  // Fallback: If companyName prop is missing, try to resolve it using the hook
+  useEffect(() => {
+    if (companyName) {
+      setDisplayName(companyName)
+    } else if (customerId && !displayName) {
+      console.log("[CustomerDashboard] companyName prop missing. Attempting to resolve...");
+      resolveCompany(customerId).then(data => {
+        if (data) setDisplayName(data.companyName)
+      }).catch(err => console.error("Failed to resolve company name in dashboard", err));
+    }
+  }, [companyName, customerId, resolveCompany, displayName])
 
   const handleRequestDetails = async (project: Project) => {
     setSelectedProjectTitle(project.projectTitle)
+    setSelectedProjectManager(project.manager)
     setSelectedProjectId(project.projectId)
     setIsOrdersModalOpen(true)
     // Fetch (or poll) data for the whole session. 
@@ -80,10 +100,10 @@ export function CustomerDashboard({
           <div className="flex items-center justify-between">
             <div>
               <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                Company ID
+                Company
               </p>
               <code className="mt-1 block font-mono text-sm text-[#FBBB10]">
-                {compId}
+                {displayName || "Loading..."}
               </code>
             </div>
             <Badge
@@ -129,8 +149,8 @@ export function CustomerDashboard({
 
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            Workspace
+          <p className="text-xs uppercase tracking-[0.2em] text-[#FBBB10] font-semibold">
+            Workspace - {displayName}
           </p>
           <h2 className="mt-2 text-lg font-semibold tracking-tight text-foreground">
             My Projects
@@ -168,6 +188,10 @@ export function CustomerDashboard({
                   </p>
 
                   <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground/50">Manager</span>
+                      <span className="text-xs text-muted-foreground">{p.manager || "-"}</span>
+                    </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] uppercase tracking-wider text-muted-foreground/50">Start Date</span>
                       <span className="text-xs text-muted-foreground">{p.startDate || "-"}</span>
@@ -231,6 +255,8 @@ export function CustomerDashboard({
         loading={ordersLoading}
         error={ordersError}
         projectTitle={selectedProjectTitle}
+        manager={selectedProjectManager}
+        companyName={displayName}
         orders={projectOrders}
         invoices={projectInvoices}
       />

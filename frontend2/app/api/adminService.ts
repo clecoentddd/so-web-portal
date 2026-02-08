@@ -15,6 +15,7 @@ export interface CreateAccountResponse {
 export interface CustomerAccountLookupResponse {
     customerId: string;
     companyId: number;
+    companyName: string;
 }
 
 export interface CustomerSessionResponse {
@@ -39,7 +40,7 @@ export const adminService = {
      * Resolves the companyId using the customerId.
      * Hits the new endpoint we just built in the Resource.
      */
-    getCompanyForCustomer: async (customerId: string): Promise<number> => {
+    getCompanyForCustomer: async (customerId: string): Promise<{ companyId: number; companyName: string }> => {
         console.log(`[Account Lookup] Resolving company for: ${customerId}`);
         const response = await api.get<CustomerAccountLookupResponse>(
             `/customeraccountlookup/${customerId}`
@@ -49,8 +50,8 @@ export const adminService = {
             throw new Error("Account not found or not registered to a company.");
         }
 
-        console.log(`[Account Lookup] Resolved to Company ID: ${response.data.companyId}`);
-        return response.data.companyId;
+        console.log(`[Account Lookup] Resolved to Company ID: ${response.data.companyId}, Name: ${response.data.companyName}`);
+        return { companyId: response.data.companyId, companyName: response.data.companyName };
     },
 
     connectAdmin: async (adminEmail: string): Promise<AdminConnectionResponse> => {

@@ -18,6 +18,8 @@ interface OrdersModalProps {
     loading: boolean
     error: string | null
     projectTitle: string
+    manager?: string
+    companyName?: string
     orders: OrderInfo[]
     invoices: InvoiceInfo[]
 }
@@ -28,14 +30,16 @@ export function OrdersModal({
     loading,
     error,
     projectTitle,
+    manager,
+    companyName,
     orders,
     invoices,
 }: OrdersModalProps) {
 
     const formatCurrency = (amount: number) => {
-        return new Intl.NumberFormat('fr-FR', {
+        return new Intl.NumberFormat('fr-CH', {
             style: 'currency',
-            currency: 'EUR',
+            currency: 'CHF',
         }).format(amount);
     }
 
@@ -59,14 +63,30 @@ export function OrdersModal({
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent className="max-w-5xl h-[90vh] flex flex-col bg-[#F8F9FA]">
-                <DialogHeader className="border-b border-slate-200 pb-4">
-                    <DialogTitle className="text-2xl flex items-center gap-2 font-bold">
-                        <FileText className="h-6 w-6 text-[#FBBB10]" />
-                        Project <span className="text-[#FBBB10]">{projectTitle}</span>
-                    </DialogTitle>
-                    <DialogDescription className="text-base text-slate-600">
-                        Detailed breakdown of orders and financial tracking.
-                    </DialogDescription>
+                <DialogHeader className="border-b border-slate-200 pb-4 flex flex-row items-start justify-between space-y-0">
+                    <div className="space-y-1">
+                        <DialogTitle className="text-2xl flex items-center gap-2 font-bold text-slate-900">
+                            <FileText className="h-6 w-6 text-[#FBBB10]" />
+                            Project <span className="text-[#FBBB10]">{projectTitle}</span>
+                        </DialogTitle>
+                        <DialogDescription className="text-base text-slate-600">
+                            Detailed breakdown of orders and financial tracking.
+                        </DialogDescription>
+                    </div>
+                    <div className="flex flex-col gap-2 text-right pl-4 mr-8">
+                        {companyName && (
+                            <div>
+                                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Company</p>
+                                <p className="text-sm font-semibold text-slate-700">{companyName}</p>
+                            </div>
+                        )}
+                        {manager && (
+                            <div>
+                                <p className="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Manager</p>
+                                <p className="text-sm font-semibold text-slate-700">{manager}</p>
+                            </div>
+                        )}
+                    </div>
                 </DialogHeader>
 
                 <div className="flex-1 overflow-hidden mt-4">
@@ -154,6 +174,7 @@ export function OrdersModal({
                                                                     </div>
                                                                     <div className="flex gap-4 text-[11px] text-slate-500">
                                                                         <span><strong>Issued:</strong> {invoice.invoiceDate}</span>
+                                                                        <span><strong>Performed:</strong> {invoice.performedDate || "-"}</span>
                                                                         <span><strong>Due:</strong> {invoice.dueDate}</span>
                                                                     </div>
                                                                 </div>

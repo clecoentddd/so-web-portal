@@ -2,64 +2,60 @@ package boond.createclientaccount.internal
 
 import boond.domain.commands.createclientaccount.CreateAccountCommand
 import java.util.UUID
-import java.util.concurrent.CompletableFuture
-import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.messaging.MetaData
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
+// 1. Keep the Payload right here in the same file
 data class CreateClientAccountPayload(
-    var connectionId: UUID,
-    var clientEmail: String,
-    var companyId: Long
+        val connectionId: UUID?,
+        val clientEmail: String?,
+        val companyId: Long?,
+        val companyName: String?
 )
 
-/*
-Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764658242238320
-*/
 @RestController
-class CreateAccountResource(private var commandGateway: CommandGateway) {
+class CreateAccountResource(private val commandGateway: CommandGateway) {
 
-  var logger = KotlinLogging.logger {}
+        @CrossOrigin
+        @PostMapping("/createclientaccount")
+        fun processCommand(@RequestBody payload: CreateClientAccountPayload): Map<String, String> {
 
-  @CrossOrigin
-  @PostMapping("/debug/createclientaccount")
-  fun processDebugCommand(
-      @RequestParam connectionId: UUID,
-      @RequestParam clientEmail: String,
-      @RequestParam companyId: Long,
-      @RequestParam customerId: UUID
-  ): CompletableFuture<Any> {
-    return commandGateway.send(
-        CreateAccountCommand(connectionId, clientEmail, companyId, customerId))
-  }
+                // 2. Simple validation - if it fails, it throws an error automatically
+                val cid =
+                        payload.connectionId
+                                ?: throw IllegalArgumentException("connectionId is missing")
+                val email =
+                        payload.clientEmail
+                                ?: throw IllegalArgumentException("clientEmail is missing")
+                val compId =
+                        payload.companyId ?: throw IllegalArgumentException("companyId is missing")
+                val compName =
+                        payload.companyName
+                                ?: throw IllegalArgumentException("companyName is missing")
 
-  @CrossOrigin
-  @PostMapping("/createclientaccount") // Removed trailing slash for standard REST
-  fun processCommand(@RequestBody payload: CreateClientAccountPayload): Map<String, String> {
+                val generatedId = UUID.randomUUID()
 
-    // 1. Ensure companyId is set:
-    requireNotNull(payload.companyId) { "The companyId is mandatory to create an account." }
-    require(payload.companyId > 0) { "The companyId must be a valid positive ID." }
+                // 3. Send it
+                commandGateway.sendAndWait<Any>(
+                        CreateAccountCommand(
+                                customerId = generatedId,
+                                connectionId = cid,
+                                clientEmail = email,
+                                companyId = compId,
+                                companyName = compName
+                        ),
+                        MetaData.with("COMPANY_ID", compId)
+                )
 
-    // 2. Generate the ID here so we can return it to the caller
-    val generatedCustomerId = UUID.randomUUID()
+                return mapOf("customerId" to generatedId.toString())
+        }
 
-    // 3. Send the command.
-    // We use send() or sendAndWait() depending on if we want to block.
-    commandGateway.sendAndWait<Any>(
-        CreateAccountCommand(
-            customerId = generatedCustomerId,
-            connectionId = payload.connectionId,
-            clientEmail = payload.clientEmail,
-            companyId = payload.companyId),
-        MetaData.with("COMPANY_ID", payload.companyId))
-
-    // 3. Return the ID so the UI can redirect to the new customer profile
-    return mapOf("customerId" to generatedCustomerId.toString())
-  }
+        // 4. Simple error catcher to prevent 500 errors in Swagger
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        @ExceptionHandler(IllegalArgumentException::class)
+        fun handleBadRequest(ex: IllegalArgumentException): Map<String, String?> {
+                return mapOf("error" to ex.message)
+        }
 }

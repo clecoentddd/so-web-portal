@@ -14,6 +14,13 @@ export interface CompanyInfo {
   companyName: string;
 }
 
+export interface CustomerAccount {
+  customerId: string;
+  clientEmail: string;
+  companyId: number;
+  companyName: string;
+}
+
 export interface ProjectInfo {
   projectId: number;
   reference: string;
@@ -23,13 +30,16 @@ export interface ProjectInfo {
   endDate?: string;
   forecastEndDate?: string;
   status: string;
+  manager: string;
 }
 
 export const useAdmin = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [companies, setCompanies] = useState<CompanyInfo[]>([]);
+  const [customerAccounts, setCustomerAccounts] = useState<CustomerAccount[]>([]);
   const [projects, setProjects] = useState<ProjectInfo[]>([]);
+  const [companyName, setCompanyName] = useState<string>("");
 
   /**
    * ADMIN: Connects and returns connectionId
@@ -50,6 +60,22 @@ export const useAdmin = () => {
   };
 
   /**
+   * Helper to resolve company details by customer ID
+   */
+  const resolveCompany = async (customerId: string) => {
+    try {
+      const response = await fetch(`http://localhost:8080/customeraccountlookup/${customerId}`);
+      if (!response.ok) throw new Error(`Lookup failed: ${response.status}`);
+      const companyData = await response.json();
+      setCompanyName(companyData.companyName);
+      return { companyId: companyData.companyId, companyName: companyData.companyName };
+    } catch (lookupErr: any) {
+      console.error("[useAdmin] Lookup failed.", lookupErr);
+      throw lookupErr;
+    }
+  };
+
+  /**
    * CUSTOMER: The "Waterfall" discovery flow
    * Now includes automatic company resolution.
    */
@@ -57,10 +83,8 @@ export const useAdmin = () => {
     setLoading(true);
     setError(null);
     try {
-      // 1. Resolve Company ID first
-      const companyId = await adminService.getCompanyForCustomer(customerId);
-
-      // 2. Fire the connection command
+      console.log(`[useAdmin] Step 1: Connecting to account...`);
+      // 1. Fire the connection command
       const authResponse = await fetch(`http://localhost:8080/clientaccountconnection/${customerId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -72,8 +96,21 @@ export const useAdmin = () => {
         throw new Error(`Connection failed: ${authResponse.status} ${errorText}`);
       }
 
-      // Return the resolved companyId so App.tsx knows what to poll with
-      return { success: true, companyId };
+      console.log(`[useAdmin] Step 2: Resolving Company ID for customer ${customerId}...`);
+      // 2. Resolve Company ID and Name via customeraccountlookup API
+      try {
+        const { companyId, companyName } = await resolveCompany(customerId);
+        console.log(`[useAdmin] Resolved Company ID: ${companyId}, Name: ${companyName}`);
+
+        // 3. Discovery Step: Wait for the session to be created/updated
+        console.log(`[useAdmin] Step 3: Waiting for session projection...`);
+        const session = await adminService.getFreshSession(customerId, companyId);
+
+        return { success: true, companyId, companyName, sessionId: session.sessionId };
+      } catch (err: any) {
+        console.error("[useAdmin] Lookup or Session failed.", err);
+        throw new Error("Could not find customer account details.");
+      }
     } catch (err: any) {
       console.error("[Hook Log] Customer Connect Error:", err);
       setError(err.message || "Failed to resolve account or connect.");
@@ -137,6 +174,25 @@ export const useAdmin = () => {
   };
 
   /**
+   * FETCH: Gets the list of customer accounts
+   */
+  const fetchCustomerAccounts = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch('http://localhost:8080/customeraccountlist');
+      if (!response.ok) throw new Error(`Server returned ${response.status}`);
+
+      const json = await response.json();
+      setCustomerAccounts(json.data || []);
+      setError(null);
+    } catch (err: any) {
+      setError("Failed to load customer accounts");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
    * FETCH: Gets companies for the admin dropdown
    */
   const fetchCompanies = async (connectionId: string, retryCount = 0) => {
@@ -181,12 +237,16 @@ export const useAdmin = () => {
   return {
     connect,
     customerConnect,
+    resolveCompany,
     createAccount,
     fetchCompanies,
     fetchProjects,
+    fetchCustomerAccounts,
     requestProjectDetails,
     companies,
     projects,
+    customerAccounts,
+    companyName,
     loading,
     error
   };

@@ -22,6 +22,7 @@ class ClientAccountAggregate {
   // Internal state to track ownership and company context
   private var registeredEmail: String? = null
   private var companyId: Long = 0
+  private var companyName: String = ""
 
   constructor()
 
@@ -34,11 +35,14 @@ class ClientAccountAggregate {
     require(command.companyId > 0) { "Company ID must be a positive number" }
 
     AggregateLifecycle.apply(
-        AccountCreatedEvent(
-            customerId = command.customerId,
-            connectionId = command.connectionId,
-            clientEmail = command.clientEmail,
-            companyId = command.companyId))
+            AccountCreatedEvent(
+                    customerId = command.customerId,
+                    connectionId = command.connectionId,
+                    clientEmail = command.clientEmail,
+                    companyId = command.companyId,
+                    companyName = command.companyName
+            )
+    )
   }
 
   @CommandHandler
@@ -52,10 +56,12 @@ class ClientAccountAggregate {
 
     // Use 'this.companyId' (from Aggregate state), NOT 'command.companyId'
     AggregateLifecycle.apply(
-        CustomerConnectedEvent(
-            customerId = command.customerId,
-            clientEmail = command.clientEmail,
-            companyId = this.companyId))
+            CustomerConnectedEvent(
+                    customerId = command.customerId,
+                    clientEmail = command.clientEmail,
+                    companyId = this.companyId
+            )
+    )
   }
 
   // --- STATE RECONSTRUCTION ---
@@ -65,6 +71,7 @@ class ClientAccountAggregate {
     this.customerId = event.customerId
     this.registeredEmail = event.clientEmail
     this.companyId = event.companyId // Store the ID for future use
+    this.companyName = event.companyName
   }
 
   @EventSourcingHandler

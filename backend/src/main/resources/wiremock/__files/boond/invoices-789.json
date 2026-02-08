@@ -9,6 +9,7 @@
                 "state": 50,
                 "invoiceDate": "2024-01-20",
                 "dueDate": "2024-02-20",
+                "performedDate": "",
                 "amount": 30000.00,
                 "informations": {
                     "totalExcludingTaxes": 30000.00,
@@ -46,6 +47,7 @@
                 "state": 40,
                 "invoiceDate": "2024-03-25",
                 "dueDate": "2024-04-25",
+                "performedDate": "",
                 "amount": 30000.00,
                 "informations": {
                     "totalExcludingTaxes": 30000.00,
@@ -83,6 +85,7 @@
                 "state": 30,
                 "invoiceDate": "2024-04-10",
                 "dueDate": "2024-05-10",
+                "performedDate": "2024-05-09",
                 "amount": 18000.00,
                 "informations": {
                     "totalExcludingTaxes": 18000.00,
@@ -120,6 +123,7 @@
                 "state": 20,
                 "invoiceDate": "2024-05-15",
                 "dueDate": "2024-06-15",
+                "performedDate": "2024-06-14",
                 "amount": 18000.00,
                 "informations": {
                     "totalExcludingTaxes": 18000.00,
@@ -157,6 +161,7 @@
                 "state": 10,
                 "invoiceDate": "2024-06-20",
                 "dueDate": "2024-07-20",
+                "performedDate": "2024-06-20",
                 "amount": 24000.00,
                 "informations": {
                     "totalExcludingTaxes": 24000.00,
@@ -194,6 +199,7 @@
                 "state": 50,
                 "invoiceDate": "2024-03-15",
                 "dueDate": "2024-04-15",
+                "performedDate": "",
                 "amount": 37500.00,
                 "informations": {
                     "totalExcludingTaxes": 37500.00,
@@ -231,6 +237,7 @@
                 "state": 40,
                 "invoiceDate": "2024-05-25",
                 "dueDate": "2024-06-25",
+                "performedDate": "",
                 "amount": 37500.00,
                 "informations": {
                     "totalExcludingTaxes": 37500.00,
@@ -268,6 +275,7 @@
                 "state": 10,
                 "invoiceDate": "2024-06-10",
                 "dueDate": "2024-07-10",
+                "performedDate": "",
                 "amount": 75000.00,
                 "informations": {
                     "totalExcludingTaxes": 75000.00,

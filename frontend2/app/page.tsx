@@ -10,6 +10,7 @@ import { AdminConnect } from "@/components/portal/admin-connect"
 import { AdminDashboard } from "@/components/portal/admin-dashboard"
 import { CreateAccount } from "@/components/portal/create-account"
 import { ViewCompanies } from "@/components/portal/view-companies"
+import { ViewCustomers } from "@/components/portal/view-customers"
 import { CustomerConnect } from "@/components/portal/customer-connect"
 import { CustomerDashboard } from "@/components/portal/customer-dashboard"
 import { ErrorBanner } from "@/components/portal/error-banner"
@@ -22,6 +23,7 @@ type View =
   | "DASHBOARD"
   | "CREATE_ACCOUNT"
   | "VIEW_COMPANIES"
+  | "VIEW_CUSTOMERS"
   | "CUSTOMER_DASHBOARD"
 type DashboardMode = "WELCOME" | "LIST"
 
@@ -35,8 +37,10 @@ export default function Page() {
     createAccount,
     fetchCompanies,
     fetchProjects,
+    fetchCustomerAccounts,
     companies,
     projects,
+    customerAccounts,
     loading,
     error,
   } = useAdmin()
@@ -68,35 +72,14 @@ export default function Page() {
     }
   }
 
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const selectedCompanyId = Number(formData.get("companyId"))
-    try {
-      await createAccount({
-        connectionId: connId,
-        clientEmail: formData.get("clientEmail") as string,
-        companyId: selectedCompanyId,
-      })
-      setView("DASHBOARD")
-    } catch (err) {
-      console.error("Creation failed", err)
-    }
-  }
-
   const handleCustomerConnect = async () => {
     if (!custId || !email) return
     try {
-      // 1. Resolve Company & Fire Command
+      // 1. Resolve, Connect, and Wait for Discovery (all in one go)
       const result = await customerConnect(custId, email)
+
       setCompId(result.companyId)
-
-      // 2. DISCOVERY STEP (Missing): Wait for the projection to sync
-      // This provides the sessionId (UUID) needed for the project list
-      const session = await adminService.getFreshSession(custId, result.companyId);
-
-      // 3. Set the Session ID so fetchProjects has a valid UUID
-      setConnId(session.sessionId)
+      setConnId(result.sessionId)
 
       setDashboardMode("WELCOME")
       setView("CUSTOMER_DASHBOARD")
@@ -151,6 +134,10 @@ export default function Page() {
                 connId={connId}
                 onCreateAccount={() => setView("CREATE_ACCOUNT")}
                 onViewCompanies={() => setView("VIEW_COMPANIES")}
+                onViewCustomers={() => {
+                  fetchCustomerAccounts()
+                  setView("VIEW_CUSTOMERS")
+                }}
                 onLogout={resetPortal}
               />
             )}
@@ -158,15 +145,25 @@ export default function Page() {
             {view === "CREATE_ACCOUNT" && (
               <CreateAccount
                 companies={companies}
-                loading={loading}
-                onSubmit={handleFormSubmit}
+                connectionId={connId}
                 onBack={() => setView("DASHBOARD")}
+                onViewAccounts={() => {
+                  fetchCustomerAccounts()
+                  setView("VIEW_CUSTOMERS")
+                }}
               />
             )}
 
             {view === "VIEW_COMPANIES" && (
               <ViewCompanies
                 companies={companies}
+                onBack={() => setView("DASHBOARD")}
+              />
+            )}
+
+            {view === "VIEW_CUSTOMERS" && (
+              <ViewCustomers
+                accounts={customerAccounts}
                 onBack={() => setView("DASHBOARD")}
               />
             )}

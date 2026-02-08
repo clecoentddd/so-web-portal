@@ -2,10 +2,11 @@
 
 import React from "react"
 
-import { ArrowLeft, Loader2 } from "lucide-react"
+import { ArrowLeft, Loader2, CheckCircle2, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAdmin } from "@/hooks/useAdmin"
 import {
   Select,
   SelectContent,
@@ -14,21 +15,67 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState } from "react"
+import { ErrorBanner } from "./error-banner"
 
 interface CreateAccountProps {
   companies: { companyId: number; companyName: string }[]
-  loading: boolean
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void
   onBack: () => void
+  onViewAccounts: () => void
+  connectionId: string
 }
 
 export function CreateAccount({
   companies,
-  loading,
-  onSubmit,
   onBack,
+  onViewAccounts,
+  connectionId,
 }: CreateAccountProps) {
+  const { createAccount, loading, error } = useAdmin()
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>("")
+  const [successData, setSuccessData] = useState<{ email: string; companyId: string } | null>(null)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const clientEmail = formData.get("clientEmail") as string
+    const companyId = formData.get("companyId") as string
+
+    if (!clientEmail || !companyId) return
+
+    try {
+      await createAccount({
+        connectionId,
+        clientEmail,
+        companyId: Number(companyId),
+      })
+      setSuccessData({ email: clientEmail, companyId })
+    } catch (err) {
+      // Error is handled by useAdmin hook state
+    }
+  }
+
+  if (successData) {
+    return (
+      <div className="py-12 text-center">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-500/10">
+          <CheckCircle2 className="h-8 w-8 text-green-500" />
+        </div>
+        <h2 className="text-xl font-semibold text-foreground">Account Created</h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Account created for <span className="font-medium text-foreground">{successData.email}</span> (Company {successData.companyId})
+        </p>
+        <div className="mt-8 flex justify-center gap-4">
+          <Button variant="outline" onClick={onBack}>Back to Dashboard</Button>
+          <Button onClick={() => {
+            console.log("[CreateAccount] 'See account list' clicked. Navigating...");
+            onViewAccounts();
+          }} className="bg-[#FBBB10] text-[#111827] hover:bg-[#FBBB10]/90">
+            See account list <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="py-4">
@@ -50,7 +97,9 @@ export function CreateAccount({
         </h2>
       </div>
 
-      <form onSubmit={onSubmit} className="space-y-5">
+      {error && <ErrorBanner message={error} />}
+
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
           <Label
             htmlFor="clientEmail"
