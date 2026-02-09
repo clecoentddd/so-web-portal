@@ -12,19 +12,19 @@ interface InvoiceListReadModelRepository : JpaRepository<InvoiceListReadModelEnt
 @Component
 class InvoiceListReadModelProjector(private val repository: InvoiceListReadModelRepository) {
 
-    @EventHandler
-    fun on(event: InvoicesFetchedEvent) {
-        // Find existing session projection or create a fresh one
-        val entity = repository.findById(event.sessionId).orElse(InvoiceListReadModelEntity())
+  @EventHandler
+  fun on(event: InvoicesFetchedEvent) {
+    // Find existing session projection or create a fresh one
+    val entity = repository.findById(event.sessionId).orElse(InvoiceListReadModelEntity())
 
-        entity.apply {
-            sessionId = event.sessionId
-            companyId = event.companyId
-            // Clear and replace to avoid JPA collection mapping issues
-            invoiceList.clear()
-            invoiceList.addAll(event.invoiceList)
-        }
-
-        repository.save(entity)
+    entity.apply {
+      sessionId = event.sessionId
+      companyId = event.companyId
+      // Clear and replace to avoid JPA collection mapping issues
+      invoiceList.clear()
+      invoiceList.addAll(event.invoiceList)
     }
+
+    repository.save(entity)
+  }
 }

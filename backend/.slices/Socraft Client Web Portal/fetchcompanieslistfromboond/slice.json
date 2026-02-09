@@ -130,7 +130,7 @@
         {
           "id": "3458764658242238268",
           "type": "OUTBOUND",
-          "title": "List Of Companies",
+          "title": "CompanyListLookUp",
           "elementType": "READMODEL"
         },
         {

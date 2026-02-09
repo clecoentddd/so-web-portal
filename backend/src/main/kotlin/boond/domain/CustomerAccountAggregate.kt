@@ -1,8 +1,8 @@
 package boond.domain
 
 import boond.common.CommandException
-import boond.domain.commands.clientaccountconnection.ToConnectToAccountCommand
-import boond.domain.commands.createclientaccount.CreateAccountCommand
+import boond.domain.commands.createcustomeraccount.CreateAccountCommand
+import boond.domain.commands.customeraccountconnection.ToConnectToAccountCommand
 import boond.events.AccountCreatedEvent
 import boond.events.CustomerConnectedEvent
 import java.util.UUID
@@ -35,14 +35,12 @@ class ClientAccountAggregate {
     require(command.companyId > 0) { "Company ID must be a positive number" }
 
     AggregateLifecycle.apply(
-            AccountCreatedEvent(
-                    customerId = command.customerId,
-                    connectionId = command.connectionId,
-                    clientEmail = command.clientEmail,
-                    companyId = command.companyId,
-                    companyName = command.companyName
-            )
-    )
+        AccountCreatedEvent(
+            customerId = command.customerId,
+            connectionId = command.connectionId,
+            clientEmail = command.clientEmail,
+            companyId = command.companyId,
+            companyName = command.companyName))
   }
 
   @CommandHandler
@@ -56,12 +54,10 @@ class ClientAccountAggregate {
 
     // Use 'this.companyId' (from Aggregate state), NOT 'command.companyId'
     AggregateLifecycle.apply(
-            CustomerConnectedEvent(
-                    customerId = command.customerId,
-                    clientEmail = command.clientEmail,
-                    companyId = this.companyId
-            )
-    )
+        CustomerConnectedEvent(
+            customerId = command.customerId,
+            clientEmail = command.clientEmail,
+            companyId = this.companyId))
   }
 
   // --- STATE RECONSTRUCTION ---

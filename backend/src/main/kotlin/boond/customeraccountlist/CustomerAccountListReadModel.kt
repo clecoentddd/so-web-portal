@@ -24,7 +24,7 @@ data class CustomerAccountListReadModel(val data: List<CustomerAccountListReadMo
 data class CustomerAccountLookupQuery(val customerId: UUID)
 
 data class CustomerAccountLookupReadModel(
-        val customerId: UUID,
-        val companyId: Long,
-        @JsonProperty("companyName") val companyName: String
+    val customerId: UUID,
+    val companyId: Long,
+    @JsonProperty("companyName") val companyName: String
 )

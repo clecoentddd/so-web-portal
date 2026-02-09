@@ -21,9 +21,7 @@ class CompanyOrderListReadModelEntity {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-          name = "companyorderlist_order_items",
-          joinColumns = [JoinColumn(name = "session_id")]
-  )
+      name = "companyorderlist_order_items", joinColumns = [JoinColumn(name = "session_id")])
   var orderList: MutableList<OrderInfo> = mutableListOf()
 }
 

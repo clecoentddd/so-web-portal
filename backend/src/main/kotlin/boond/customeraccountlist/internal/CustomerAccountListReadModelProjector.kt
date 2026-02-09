@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CustomerAccountListReadModelRepository :
-        JpaRepository<CustomerAccountListReadModelEntity, UUID> {
+    JpaRepository<CustomerAccountListReadModelEntity, UUID> {
 
   // The Guard: Check if the customer exists AND is tied to this specific company
   fun existsByCustomerIdAndCompanyId(customerId: UUID, companyId: Long): Boolean
@@ -22,7 +22,7 @@ interface CustomerAccountListReadModelRepository :
 
 @Component
 class CustomerAccountListReadModelProjector(
-        private val repository: CustomerAccountListReadModelRepository
+    private val repository: CustomerAccountListReadModelRepository
 ) {
 
   @EventHandler
@@ -32,21 +32,21 @@ class CustomerAccountListReadModelProjector(
 
     // Find existing or new. Since customerId is @Id, findById is perfect.
     val entity =
-            repository.findById(eventCustomerId).orElseGet { CustomerAccountListReadModelEntity() }
+        repository.findById(eventCustomerId).orElseGet { CustomerAccountListReadModelEntity() }
 
     entity
-            .apply {
-              this.customerId = eventCustomerId
-              this.clientEmail = event.clientEmail
-              this.companyId = event.companyId // Injected as Long
-              this.companyName = event.companyName
-            }
-            .also {
-              logger.info {
-                "Projecting AccountCreatedEvent for customer: ${event.customerId} (Company: ${event.companyId}) (Company Name: ${event.companyName})"
-              }
-              repository.save(it)
-            }
+        .apply {
+          this.customerId = eventCustomerId
+          this.clientEmail = event.clientEmail
+          this.companyId = event.companyId // Injected as Long
+          this.companyName = event.companyName
+        }
+        .also {
+          logger.info {
+            "Projecting AccountCreatedEvent for customer: ${event.customerId} (Company: ${event.companyId}) (Company Name: ${event.companyName})"
+          }
+          repository.save(it)
+        }
   }
 
   @ResetHandler

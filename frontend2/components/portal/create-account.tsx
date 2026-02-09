@@ -39,6 +39,8 @@ export function CreateAccount({
     const formData = new FormData(e.currentTarget)
     const clientEmail = formData.get("clientEmail") as string
     const companyId = formData.get("companyId") as string
+    const selectedCompanyName = companies.find(c => c.companyId === Number(companyId))?.companyName || ""
+
 
     if (!clientEmail || !companyId) return
 
@@ -47,6 +49,7 @@ export function CreateAccount({
         connectionId,
         clientEmail,
         companyId: Number(companyId),
+        companyName: selectedCompanyName
       })
       setSuccessData({ email: clientEmail, companyId })
     } catch (err) {

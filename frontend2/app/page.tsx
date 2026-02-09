@@ -41,6 +41,7 @@ export default function Page() {
     companies,
     projects,
     customerAccounts,
+    companyName,
     loading,
     error,
   } = useAdmin()
@@ -183,6 +184,7 @@ export default function Page() {
             {view === "CUSTOMER_DASHBOARD" && (
               <CustomerDashboard
                 compId={compId}
+                companyName={companyName}
                 sessionId={connId}
                 customerId={custId}
                 dashboardMode={dashboardMode}

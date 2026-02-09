@@ -26,10 +26,10 @@
     },
     {
       "id": "3458764658242238250",
-      "slice": "slice: List of companies",
+      "slice": "slice: Company List Look Up",
       "index": 7,
       "context": "Socraft Client Web Portal",
-      "folder": "listofcompanies",
+      "folder": "companylistlookup",
       "status": "Done"
     },
     {

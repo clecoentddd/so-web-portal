@@ -1,4 +1,4 @@
-package boond.domain.commands.clientaccountconnection
+package boond.domain.commands.customeraccountconnection
 
 import boond.common.Command
 import java.util.UUID

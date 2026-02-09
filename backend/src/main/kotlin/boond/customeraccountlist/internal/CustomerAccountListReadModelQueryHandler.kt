@@ -13,7 +13,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 
 @Component
 class CustomerAccountListReadModelQueryHandler(
-        private val repository: CustomerAccountListReadModelRepository
+    private val repository: CustomerAccountListReadModelRepository
 ) {
 
   /** Handles the request for the full list of accounts. */
@@ -34,10 +34,7 @@ class CustomerAccountListReadModelQueryHandler(
     // Map the database entity to the ReadModel DTO
     return entity?.let {
       CustomerAccountLookupReadModel(
-              customerId = it.customerId!!,
-              companyId = it.companyId!!,
-              companyName = it.companyName!!
-      )
+          customerId = it.customerId!!, companyId = it.companyId!!, companyName = it.companyName!!)
     }
   }
 }

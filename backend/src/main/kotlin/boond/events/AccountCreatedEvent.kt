@@ -7,9 +7,9 @@ import java.util.UUID
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764658242238229
 */
 data class AccountCreatedEvent(
-        var connectionId: UUID,
-        var clientEmail: String,
-        var companyId: Long,
-        var companyName: String,
-        var customerId: UUID
+    var connectionId: UUID,
+    var clientEmail: String,
+    var companyId: Long,
+    var companyName: String,
+    var customerId: UUID
 ) : Event

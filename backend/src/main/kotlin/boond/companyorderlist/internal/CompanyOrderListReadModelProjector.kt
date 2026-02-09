@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Component
 
 interface CompanyOrderListReadModelRepository :
-        JpaRepository<CompanyOrderListReadModelEntity, UUID>
+    JpaRepository<CompanyOrderListReadModelEntity, UUID>
 
 /*
 Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=3458764658242238377
@@ -22,11 +22,11 @@ class CompanyOrderListReadModelProjector(var repository: CompanyOrderListReadMod
     // throws exception if not available (adjust logic)
     val entity = this.repository.findById(event.sessionId).orElse(CompanyOrderListReadModelEntity())
     entity
-            .apply {
-              companyId = event.companyId
-              orderList = event.orderList.toMutableList()
-              sessionId = event.sessionId
-            }
-            .also { this.repository.save(it) }
+        .apply {
+          companyId = event.companyId
+          orderList = event.orderList.toMutableList()
+          sessionId = event.sessionId
+        }
+        .also { this.repository.save(it) }
   }
 }

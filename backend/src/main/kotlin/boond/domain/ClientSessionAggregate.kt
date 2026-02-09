@@ -33,12 +33,10 @@ class SessionAggregate() {
     // Semantic validation can happen here if needed
 
     AggregateLifecycle.apply(
-            CustomerSessionInitiatedEvent(
-                    sessionId = command.sessionId,
-                    companyId = command.companyId,
-                    customerId = command.customerId
-            )
-    )
+        CustomerSessionInitiatedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId))
   }
 
   @EventSourcingHandler
@@ -57,13 +55,11 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-            ListOfProjectsFetchedEvent(
-                    sessionId = command.sessionId,
-                    companyId = command.companyId,
-                    customerId = command.customerId,
-                    projectList = command.projectList
-            )
-    )
+        ListOfProjectsFetchedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId,
+            projectList = command.projectList))
   }
 
   @EventSourcingHandler
@@ -79,13 +75,11 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-            ProjectDetailsRequestedEvent(
-                    sessionId = command.sessionId,
-                    companyId = command.companyId,
-                    customerId = command.customerId,
-                    projectId = command.projectId
-            )
-    )
+        ProjectDetailsRequestedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId,
+            projectId = command.projectId))
   }
 
   @EventSourcingHandler
@@ -101,13 +95,11 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-            OrdersFetchedEvent(
-                    sessionId = command.sessionId,
-                    companyId = command.companyId,
-                    customerId = command.customerId,
-                    orderList = command.orderList
-            )
-    )
+        OrdersFetchedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId,
+            orderList = command.orderList))
   }
 
   @EventSourcingHandler
@@ -123,13 +115,11 @@ class SessionAggregate() {
     check(command.customerId == this.customerId) { "customerId mismatch" }
 
     AggregateLifecycle.apply(
-            InvoicesFetchedEvent(
-                    sessionId = command.sessionId,
-                    companyId = command.companyId,
-                    customerId = command.customerId,
-                    invoiceList = command.invoiceList
-            )
-    )
+        InvoicesFetchedEvent(
+            sessionId = command.sessionId,
+            companyId = command.companyId,
+            customerId = command.customerId,
+            invoiceList = command.invoiceList))
   }
 
   @EventSourcingHandler

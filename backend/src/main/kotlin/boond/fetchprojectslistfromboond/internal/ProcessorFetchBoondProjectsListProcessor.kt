@@ -17,8 +17,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 @Component
 class ProcessorFetchBoondProjectsListProcessor(
-        private val commandGateway: CommandGateway,
-        private val boondAdapter: FetchBoondAPIProjectList
+    private val commandGateway: CommandGateway,
+    private val boondAdapter: FetchBoondAPIProjectList
 ) : Processor {
 
   private val logger = KotlinLogging.logger {}
@@ -35,41 +35,36 @@ class ProcessorFetchBoondProjectsListProcessor(
     // 2. Map French Adapter DTOs to Common Domain Model
     // Explicitly typing 'p: Projet' solves the 'cannot infer type' error
     val projectsList: List<ProjectInfo> =
-            response.projets.map { p: Projet ->
-              ProjectInfo(
-                      projectId = p.projectId,
-                      reference = p.reference,
-                      projectTitle = p.projectTitle,
-                      projectDescription = p.projetDescription,
-                      startDate =
-                              p.startDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
-                      endDate = p.endDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
-                      forecastEndDate =
-                              p.forecastEndDate?.let {
-                                runCatching { LocalDate.parse(it) }.getOrNull()
-                              },
-                      status = p.status,
-                      manager = p.manager ?: "No Manager Assigned"
-              )
-            }
+        response.projets.map { p: Projet ->
+          ProjectInfo(
+              projectId = p.projectId,
+              reference = p.reference,
+              projectTitle = p.projectTitle,
+              projectDescription = p.projetDescription,
+              startDate = p.startDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
+              endDate = p.endDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
+              forecastEndDate =
+                  p.forecastEndDate?.let { runCatching { LocalDate.parse(it) }.getOrNull() },
+              status = p.status,
+              manager = p.manager ?: "No Manager Assigned")
+        }
 
     // 3. Dispatch command to the Aggregate
-    commandGateway.send<Any>(
-                    MarkListOfProjectsFetchedCommand(
-                            sessionId = event.sessionId,
-                            companyId = event.companyId,
-                            customerId = event.customerId,
-                            projectList = projectsList
-                    )
-            )
-            .exceptionally { throwable ->
-              // Exceptionally handles the failure of the command execution
-              logger.error(throwable) {
-                "FAILED to mark projects for session ${event.sessionId}. " +
-                        "Reason: ${throwable.message}"
-              }
-              null // Return null to satisfy the exceptionally signature
-            }
+    commandGateway
+        .send<Any>(
+            MarkListOfProjectsFetchedCommand(
+                sessionId = event.sessionId,
+                companyId = event.companyId,
+                customerId = event.customerId,
+                projectList = projectsList))
+        .exceptionally { throwable ->
+          // Exceptionally handles the failure of the command execution
+          logger.error(throwable) {
+            "FAILED to mark projects for session ${event.sessionId}. " +
+                "Reason: ${throwable.message}"
+          }
+          null // Return null to satisfy the exceptionally signature
+        }
 
     logger.info {
       "Successfully dispatched project list (${projectsList.size} items) for session ${event.sessionId}"

@@ -25,10 +25,11 @@ export interface CustomerSessionResponse {
     lastUpdated: string;
 }
 
-export interface CreateClientAccountPayload {
+export interface CreateCustomerAccountPayload {
     connectionId: string;
     clientEmail: string;
     companyId: number;
+    companyName: string;
 }
 
 const api = axios.create({
@@ -62,12 +63,39 @@ export const adminService = {
         return response.data;
     },
 
-    createClientAccount: async (payload: CreateClientAccountPayload): Promise<CreateAccountResponse> => {
-        const response = await api.post<CreateAccountResponse>(
-            '/createclientaccount',
-            payload
-        );
-        return response.data;
+    CreateCustomerAccount: async (payload: CreateCustomerAccountPayload): Promise<CreateAccountResponse> => {
+        // 1. Log the outgoing request
+        console.log('🚀 [API] Sending CreateCustomerAccount request:', {
+            url: '/createcustomeraccount',
+            payload: payload
+        });
+
+        // Defensive check: Ensure companyName is present before hitting the API
+        if (!payload.companyName) {
+            console.error('❌ [API] Aborting CreateCustomerAccount: companyName is missing/empty', payload);
+            throw new Error("Validation Failed: companyName is required.");
+        }
+
+        try {
+            const response = await api.post<CreateAccountResponse>(
+                '/createcustomeraccount',
+                payload
+            );
+
+            // 2. Log the successful response
+            console.log('✅ [API] CreateCustomerAccount Success:', response.data);
+
+            return response.data;
+
+        } catch (error: any) {
+            // 3. Log the failure (crucial for catching those 400/500 errors)
+            console.error('❌ [API] CreateCustomerAccount Failed:', {
+                status: error.response?.status,
+                data: error.response?.data,
+                message: error.message
+            });
+            throw error;
+        }
     },
 
     lookupSession: async (customerId: string, companyId: number): Promise<CustomerSessionResponse | null> => {

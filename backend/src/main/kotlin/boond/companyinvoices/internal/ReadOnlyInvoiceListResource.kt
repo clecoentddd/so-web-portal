@@ -10,14 +10,10 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class CompanyinvoicesResource(private val queryGateway: QueryGateway) {
 
-     @CrossOrigin
-     @GetMapping("/companyinvoices/{id}")
-     fun findReadModel(
-             @PathVariable("id") sessionId: UUID
-     ): CompletableFuture<InvoiceListReadModel> {
-          return queryGateway.query(
-                  InvoiceListReadModelQuery(sessionId),
-                  InvoiceListReadModel::class.java
-          )
-     }
+  @CrossOrigin
+  @GetMapping("/companyinvoices/{id}")
+  fun findReadModel(@PathVariable("id") sessionId: UUID): CompletableFuture<InvoiceListReadModel> {
+    return queryGateway.query(
+        InvoiceListReadModelQuery(sessionId), InvoiceListReadModel::class.java)
+  }
 }

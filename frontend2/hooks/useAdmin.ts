@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   adminService,
-  type CreateClientAccountPayload,
+  type CreateCustomerAccountPayload,
   type AdminConnectionResponse,
   type CreateAccountResponse
 } from '../app/api/adminService';
@@ -65,10 +65,15 @@ export const useAdmin = () => {
   const resolveCompany = async (customerId: string) => {
     try {
       const response = await fetch(`http://localhost:8080/customeraccountlookup/${customerId}`);
-      if (!response.ok) throw new Error(`Lookup failed: ${response.status}`);
-      const companyData = await response.json();
+      if (!response.ok) throw new Error(`Account lookup failed: ${response.status}`);
+      const accountData = await response.json();
+
+      const companyResponse = await fetch(`http://localhost:8080/companylistlookup/${accountData.companyId}`);
+      if (!companyResponse.ok) throw new Error(`Company lookup failed: ${companyResponse.status}`);
+      const companyData = await companyResponse.json();
+
       setCompanyName(companyData.companyName);
-      return { companyId: companyData.companyId, companyName: companyData.companyName };
+      return { companyId: accountData.companyId, companyName: companyData.companyName };
     } catch (lookupErr: any) {
       console.error("[useAdmin] Lookup failed.", lookupErr);
       throw lookupErr;
@@ -85,7 +90,7 @@ export const useAdmin = () => {
     try {
       console.log(`[useAdmin] Step 1: Connecting to account...`);
       // 1. Fire the connection command
-      const authResponse = await fetch(`http://localhost:8080/clientaccountconnection/${customerId}`, {
+      const authResponse = await fetch(`http://localhost:8080/customeraccountconnection/${customerId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ clientEmail: email }),
@@ -158,11 +163,18 @@ export const useAdmin = () => {
   /**
    * ADMIN: Creates a client account
    */
-  const createAccount = async (data: CreateClientAccountPayload): Promise<CreateAccountResponse> => {
+  const createAccount = async (data: CreateCustomerAccountPayload): Promise<CreateAccountResponse> => {
     setLoading(true);
     setError(null);
+
+    // Ensure companyName is present by falling back to the hook state if missing
+    const payload = {
+      ...data,
+      companyName: data.companyName || companyName
+    };
+
     try {
-      const res = await adminService.createClientAccount(data);
+      const res = await adminService.CreateCustomerAccount(payload);
       return res;
     } catch (err: any) {
       const errorMessage = err.response?.data?.error || 'Account creation failed';

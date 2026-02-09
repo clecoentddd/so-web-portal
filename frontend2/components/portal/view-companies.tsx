@@ -26,7 +26,7 @@ export function ViewCompanies({ companies, onBack }: ViewCompaniesProps) {
             Directory
           </p>
           <h2 className="mt-2 text-lg font-semibold tracking-tight text-foreground">
-            System Companies
+            List Of Companies
           </h2>
         </div>
         <Badge
@@ -38,6 +38,12 @@ export function ViewCompanies({ companies, onBack }: ViewCompaniesProps) {
       </div>
 
       <div className="space-y-2">
+        {companies.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-12 border border-dashed border-border bg-secondary/10">
+            <Building2 className="h-8 w-8 text-muted-foreground/50 mb-3" />
+            <p className="text-sm text-muted-foreground">No companies found.</p>
+          </div>
+        )}
         {companies.map((c) => (
           <div
             key={c.companyId}
