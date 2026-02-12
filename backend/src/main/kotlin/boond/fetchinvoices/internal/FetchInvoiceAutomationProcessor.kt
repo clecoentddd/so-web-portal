@@ -14,8 +14,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 @Component
 class FetchInvoiceAutomationProcessor(
-    private val commandGateway: CommandGateway,
-    private val boondAdapter: FetchBoondAPIInvoiceList
+        private val commandGateway: CommandGateway,
+        private val boondAdapter: FetchBoondAPIInvoiceList
 ) : Processor {
 
   private val logger = KotlinLogging.logger {}
@@ -32,20 +32,21 @@ class FetchInvoiceAutomationProcessor(
     logger.info { "Fetched ${InvoicesInfo.invoices.size} Invoices for company ${event.companyId}" }
 
     // 2. Dispatch the command with the full list
-    commandGateway
-        .send<Any>(
-            MarkInvoicesFetchedCommand(
-                sessionId = event.sessionId,
-                companyId = event.companyId,
-                customerId = event.customerId,
-                invoiceList = InvoicesInfo.invoices))
-        .exceptionally { throwable ->
-          logger.error(throwable) {
-            "FAILED to mark Invoices fetched for session ${event.sessionId}. " +
-                "Reason: ${throwable.message}"
-          }
-          null
-        }
+    commandGateway.send<Any>(
+                    MarkInvoicesFetchedCommand(
+                            sessionId = event.sessionId,
+                            companyId = event.companyId,
+                            customerId = event.customerId,
+                            invoiceList = InvoicesInfo.invoices
+                    )
+            )
+            .exceptionally { throwable ->
+              logger.error(throwable) {
+                "FAILED to mark Invoices fetched for session ${event.sessionId}. " +
+                        "Reason: ${throwable.message}"
+              }
+              null
+            }
 
     logger.info {
       "Successfully dispatched MarkInvoicesFetchedCommand for session ${event.sessionId} (${InvoicesInfo.invoices.size} Invoices)"

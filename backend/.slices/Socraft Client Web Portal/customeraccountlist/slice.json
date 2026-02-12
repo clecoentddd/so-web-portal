@@ -43,22 +43,14 @@
       ],
       "type": "READMODEL",
       "description": "",
-      "aggregate": "Client Account",
-      "aggregateDependencies": [
-        "Client Account"
-      ],
+      "aggregate": "default",
+      "aggregateDependencies": [],
       "dependencies": [
         {
           "id": "3458764658242238290",
           "type": "OUTBOUND",
           "title": "Customer Connection To Account",
           "elementType": "SCREEN"
-        },
-        {
-          "id": "3458764658242238229",
-          "type": "INBOUND",
-          "title": "Account Created",
-          "elementType": "EVENT"
         }
       ],
       "listElement": true,
@@ -106,10 +98,8 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "Client Account",
-      "aggregateDependencies": [
-        "Client Account"
-      ],
+      "aggregate": "default",
+      "aggregateDependencies": [],
       "dependencies": [
         {
           "id": "3458764658242238288",
@@ -138,7 +128,5 @@
   "tables": [],
   "specifications": [],
   "actors": [],
-  "aggregates": [
-    "Client Account"
-  ]
+  "aggregates": []
 }

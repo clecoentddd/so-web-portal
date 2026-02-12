@@ -10,7 +10,6 @@ import java.util.UUID
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventhandling.EventHandler
-import org.axonframework.eventhandling.EventMessage
 import org.springframework.stereotype.Component
 
 @Component
@@ -23,7 +22,7 @@ class ProcessorFetchInvoiceStateMappingProcessor(
 
   // ---------- SETTINGS INITIALIZED ----------
   @EventHandler
-  fun on(event: SettingsInitializedEvent, message: EventMessage<*>) {
+  fun on(event: SettingsInitializedEvent) {
     logger.info { "SettingsInitializedEvent received for connection ${event.connectionId}" }
     fetchAndDispatch(event.settingsId, event.connectionId)
   }

@@ -15,8 +15,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 class ListOfCompaniesReadModel : ReadModel {
 
+  var settingsId: UUID? = null
   var connectionId: UUID? = null
-  var adminEmail: String? = null
   var listOfCompanies: MutableList<CompanyInfo> = mutableListOf()
 
   fun applyEvents(events: List<Event>): ListOfCompaniesReadModel {
@@ -24,8 +24,8 @@ class ListOfCompaniesReadModel : ReadModel {
     events.forEach { event ->
       when (event) {
         is ListOfCompaniesFetchedEvent -> {
+          settingsId = event.settingsId
           connectionId = event.connectionId
-          adminEmail = event.adminEmail
           listOfCompanies = event.listOfCompanies.toMutableList()
         }
       }

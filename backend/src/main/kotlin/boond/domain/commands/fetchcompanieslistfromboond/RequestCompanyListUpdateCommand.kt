@@ -1,12 +1,10 @@
 package boond.domain.commands.fetchcompanieslistfromboond
 
 import boond.common.Command
-import boond.common.CompanyInfo // Import our shared class
 import java.util.UUID
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
-data class MarkListOfCompaniesFetchedCommand(
+data class RequestCompanyListUpdateCommand(
         @TargetAggregateIdentifier val settingsId: UUID,
-        val connectionId: UUID,
-        val listOfCompanies: List<CompanyInfo> = emptyList() // Consistent naming
+        val connectionId: UUID
 ) : Command

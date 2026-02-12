@@ -10,44 +10,47 @@ import org.springframework.web.bind.annotation.*
 
 /** Payload adapted to use CompanyInfo and camelCase */
 data class FetchCompaniesListFromBoondPayload(
-    var connectionId: UUID,
-    var adminEmail: String,
-    var listOfCompanies: List<CompanyInfo> = emptyList()
+        var settingsId: UUID,
+        var connectionId: UUID,
+        var listOfCompanies: List<CompanyInfo> = emptyList()
 )
 
 @RestController
 class MarkListOfCompaniesFetchedResource(private var commandGateway: CommandGateway) {
 
-  private val logger = KotlinLogging.logger {}
+    private val logger = KotlinLogging.logger {}
 
-  /**
-   * DEBUG ROUTE Note: Passing a List via @RequestParam is tricky in Swagger. Usually, it's better
-   * to use a Body for lists.
-   */
-  @CrossOrigin
-  @PostMapping("/debug/fetchcompanieslistfromboond")
-  fun processDebugCommand(
-      @RequestParam connectionId: UUID,
-      @RequestParam adminEmail: String,
-      @RequestBody listOfCompanies: List<CompanyInfo> // Changed to Body for easier testing
-  ): CompletableFuture<Any> {
-    return commandGateway.send(
-        MarkListOfCompaniesFetchedCommand(connectionId, adminEmail, listOfCompanies))
-  }
+    /**
+     * DEBUG ROUTE Note: Passing a List via @RequestParam is tricky in Swagger. Usually, it's better
+     * to use a Body for lists.
+     */
+    @CrossOrigin
+    @PostMapping("/debug/fetchcompanieslistfromboond")
+    fun processDebugCommand(
+            @RequestParam settingsId: UUID,
+            @RequestParam connectionId: UUID,
+            @RequestBody listOfCompanies: List<CompanyInfo> // Changed to Body for easier testing
+    ): CompletableFuture<Any> {
+        return commandGateway.send(
+                MarkListOfCompaniesFetchedCommand(settingsId, connectionId, listOfCompanies)
+        )
+    }
 
-  /** MAIN ROUTE */
-  @CrossOrigin
-  @PostMapping("/fetchcompanieslistfromboond/{id}")
-  fun processCommand(
-      @PathVariable("id") connectionId: UUID,
-      @RequestBody payload: FetchCompaniesListFromBoondPayload
-  ): CompletableFuture<Any> {
-    logger.info { "Manually marking companies fetched for connection $connectionId" }
+    /** MAIN ROUTE */
+    @CrossOrigin
+    @PostMapping("/fetchcompanieslistfromboond/{settingsId}")
+    fun processCommand(
+            @PathVariable("settingsId") settingsId: UUID,
+            @RequestBody payload: FetchCompaniesListFromBoondPayload
+    ): CompletableFuture<Any> {
+        logger.info { "Manually marking companies fetched for settings $settingsId" }
 
-    return commandGateway.send(
-        MarkListOfCompaniesFetchedCommand(
-            connectionId = connectionId, // Usually we take the ID from the Path
-            adminEmail = payload.adminEmail,
-            listOfCompanies = payload.listOfCompanies))
-  }
+        return commandGateway.send(
+                MarkListOfCompaniesFetchedCommand(
+                        settingsId = settingsId,
+                        connectionId = payload.connectionId,
+                        listOfCompanies = payload.listOfCompanies
+                )
+        )
+    }
 }

@@ -1,9 +1,7 @@
 package boond.domain
 
 import boond.domain.commands.adminconnection.ToConnectCommand
-import boond.domain.commands.fetchcompanieslistfromboond.MarkListOfCompaniesFetchedCommand
 import boond.events.AdminConnectedEvent
-import boond.events.ListOfCompaniesFetchedEvent
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -24,27 +22,15 @@ class ConnectionAdminAggregate {
     require(command.adminEmail.isNotBlank()) { "Admin email must not be empty" }
 
     AggregateLifecycle.apply(
-        AdminConnectedEvent(connectionId = command.connectionId, adminEmail = command.adminEmail))
+            AdminConnectedEvent(
+                    connectionId = command.connectionId,
+                    adminEmail = command.adminEmail
+            )
+    )
   }
 
   @EventSourcingHandler
   fun on(event: AdminConnectedEvent) {
-    // handle event
-    connectionId = event.connectionId
-  }
-
-  @CommandHandler
-  fun handle(command: MarkListOfCompaniesFetchedCommand) {
-
-    AggregateLifecycle.apply(
-        ListOfCompaniesFetchedEvent(
-            connectionId = command.connectionId,
-            adminEmail = command.adminEmail,
-            listOfCompanies = command.listOfCompanies))
-  }
-
-  @EventSourcingHandler
-  fun on(event: ListOfCompaniesFetchedEvent) {
     // handle event
     connectionId = event.connectionId
   }

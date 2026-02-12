@@ -22,13 +22,6 @@
           "idAttribute": true
         },
         {
-          "name": "adminEmail",
-          "type": "String",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "ListOfCompanies",
           "type": "Custom",
           "generated": true,
@@ -50,9 +43,9 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "Connection Admin",
+      "aggregate": "Settings",
       "aggregateDependencies": [
-        "Connection Admin"
+        "Settings"
       ],
       "dependencies": [
         {
@@ -94,13 +87,6 @@
           "idAttribute": true
         },
         {
-          "name": "adminEmail",
-          "type": "String",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        },
-        {
           "name": "ListOfCompanies",
           "type": "Custom",
           "generated": true,
@@ -122,17 +108,11 @@
       ],
       "type": "EVENT",
       "description": "",
-      "aggregate": "Connection Admin",
+      "aggregate": "Settings",
       "aggregateDependencies": [
-        "Connection Admin"
+        "Settings"
       ],
       "dependencies": [
-        {
-          "id": "3458764658242238263",
-          "type": "OUTBOUND",
-          "title": "Admin Connected",
-          "elementType": "READMODEL"
-        },
         {
           "id": "3458764658242238268",
           "type": "OUTBOUND",
@@ -177,11 +157,12 @@
           "idAttribute": true
         },
         {
-          "name": "adminEmail",
-          "type": "String",
+          "name": "settingsId",
+          "type": "UUID",
+          "example": "\"00000000-0000-0000-0000-000000000001\"",
           "subfields": [],
           "cardinality": "Single",
-          "idAttribute": false
+          "idAttribute": true
         },
         {
           "name": "ListOfCompanies",
@@ -205,9 +186,9 @@
       ],
       "type": "AUTOMATION",
       "description": "",
-      "aggregate": "Connection Admin",
+      "aggregate": "Settings",
       "aggregateDependencies": [
-        "Connection Admin"
+        "Settings"
       ],
       "dependencies": [
         {
@@ -215,12 +196,6 @@
           "type": "OUTBOUND",
           "title": "Mark List of Companies Fetched",
           "elementType": "COMMAND"
-        },
-        {
-          "id": "3458764658242238263",
-          "type": "INBOUND",
-          "title": "Admin Connected",
-          "elementType": "READMODEL"
         }
       ],
       "createsAggregate": false,
@@ -235,6 +210,6 @@
   "specifications": [],
   "actors": [],
   "aggregates": [
-    "Connection Admin"
+    "Settings"
   ]
 }

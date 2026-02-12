@@ -32,17 +32,9 @@
       ],
       "type": "COMMAND",
       "description": "",
-      "aggregate": "Connection Admin",
-      "aggregateDependencies": [
-        "Connection Admin"
-      ],
+      "aggregate": "default",
+      "aggregateDependencies": [],
       "dependencies": [
-        {
-          "id": "3458764658242238222",
-          "type": "OUTBOUND",
-          "title": "Admin Connected",
-          "elementType": "EVENT"
-        },
         {
           "id": "3458764658242238254",
           "type": "INBOUND",
@@ -58,59 +50,7 @@
       }
     }
   ],
-  "events": [
-    {
-      "id": "3458764658242238222",
-      "tags": [],
-      "elementContext": "INTERNAL",
-      "modelContext": "Socraft Client Web Portal",
-      "context": "INTERNAL",
-      "slice": "slice: Admin Connection",
-      "title": "Admin Connected",
-      "fields": [
-        {
-          "name": "connectionId",
-          "type": "UUID",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": true
-        },
-        {
-          "name": "adminEmail",
-          "type": "String",
-          "subfields": [],
-          "cardinality": "Single",
-          "idAttribute": false
-        }
-      ],
-      "type": "EVENT",
-      "description": "",
-      "aggregate": "Connection Admin",
-      "aggregateDependencies": [
-        "Connection Admin"
-      ],
-      "dependencies": [
-        {
-          "id": "3458764658242238263",
-          "type": "OUTBOUND",
-          "title": "Admin Connected",
-          "elementType": "READMODEL"
-        },
-        {
-          "id": "3458764658242238252",
-          "type": "INBOUND",
-          "title": "To connect",
-          "elementType": "COMMAND"
-        }
-      ],
-      "createsAggregate": false,
-      "triggers": [],
-      "sketched": false,
-      "prototype": {
-        "activeByDefault": false
-      }
-    }
-  ],
+  "events": [],
   "readmodels": [],
   "screens": [
     {
@@ -134,10 +74,8 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "Connection Admin",
-      "aggregateDependencies": [
-        "Connection Admin"
-      ],
+      "aggregate": "default",
+      "aggregateDependencies": [],
       "dependencies": [
         {
           "id": "3458764658242238252",
@@ -160,7 +98,5 @@
   "tables": [],
   "specifications": [],
   "actors": [],
-  "aggregates": [
-    "Connection Admin"
-  ]
+  "aggregates": []
 }

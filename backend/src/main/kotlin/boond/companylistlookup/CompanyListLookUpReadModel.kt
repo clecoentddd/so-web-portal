@@ -1,9 +1,8 @@
 package boond.companylistlookup
 
-import jakarta.persistence.Entity
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import java.io.Serializable
+import java.util.UUID
 
 /** QUERY: Simple object to trigger the fetch of all companies. */
 class GetAllCompaniesQuery : Serializable
@@ -12,16 +11,33 @@ class GetAllCompaniesQuery : Serializable
 @Entity
 @Table(name = "company_list_lookup")
 class CompanyListLookUpReadModelEntity : Serializable {
-  @Id var companyId: Long = 0
+  @Id @GeneratedValue var id: UUID? = null
+
+  @Column(nullable = false) var companyId: Long = 0
+
+  @Column(nullable = false) var settingsId: UUID? = null
+
+  @Column(nullable = false) var connectionId: UUID? = null
 
   var companyName: String = ""
+
+  @Column(nullable = false) var timestamp: Long = 0
 
   // Default constructor for JPA
   constructor()
 
-  constructor(companyId: Long, companyName: String) {
+  constructor(
+          companyId: Long,
+          companyName: String,
+          settingsId: UUID?,
+          connectionId: UUID?,
+          timestamp: Long
+  ) {
     this.companyId = companyId
     this.companyName = companyName
+    this.settingsId = settingsId
+    this.connectionId = connectionId
+    this.timestamp = timestamp
   }
 }
 

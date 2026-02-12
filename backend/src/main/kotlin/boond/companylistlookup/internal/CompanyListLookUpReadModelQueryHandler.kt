@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CompanyListLookUpReadModelQueryHandler(
-    private val repository: CompanyListLookUpReadModelRepository
+        private val repository: CompanyListLookUpReadModelRepository
 ) {
 
   @QueryHandler
@@ -19,6 +19,6 @@ class CompanyListLookUpReadModelQueryHandler(
 
   @QueryHandler
   fun handle(query: GetCompanyByIdQuery): CompanyListLookUpReadModelEntity? {
-    return repository.findById(query.companyId).orElse(null)
+    return repository.findByCompanyId(query.companyId)
   }
 }

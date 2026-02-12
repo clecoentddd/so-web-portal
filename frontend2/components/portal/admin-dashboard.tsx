@@ -1,6 +1,6 @@
 "use client"
 
-import { UserPlus, Building2, Terminal, Users, FileText } from "lucide-react"
+import { UserPlus, Building2, Terminal, Users, FileText, ChevronRight } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 interface AdminDashboardProps {
@@ -10,6 +10,7 @@ interface AdminDashboardProps {
   onViewCustomers: () => void
   onViewInvoiceMapping: () => void
   onLogout: () => void
+  companies: any[]
 }
 
 export function AdminDashboard({
@@ -18,7 +19,19 @@ export function AdminDashboard({
   onViewCompanies,
   onViewCustomers,
   onViewInvoiceMapping,
+  companies = [],
+  onLogout,
 }: AdminDashboardProps) {
+  const lastUpdated = companies?.length > 0 ? companies[0].timestamp : null
+
+  const formatTimestamp = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+  }
   return (
     <div className="py-4">
       <div className="mb-6">
@@ -74,16 +87,24 @@ export function AdminDashboard({
           onClick={onViewCompanies}
           className="group flex items-center gap-4 border border-border bg-secondary/50 px-5 py-5 transition-all duration-200 hover:border-[#FBBB10] hover:bg-secondary"
         >
-          <div className="flex h-10 w-10 items-center justify-center border border-border bg-background transition-colors group-hover:border-[#FBBB10]/50">
-            <Building2 className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-[#FBBB10]" />
+          <div className="flex h-10 w-10 items-center justify-center border border-border bg-background group-hover:border-[#FBBB10]/50">
+            <Building2 className="h-5 w-5 text-muted-foreground group-hover:text-[#FBBB10]" />
           </div>
-          <div className="text-left">
-            <p className="text-sm font-semibold uppercase tracking-wider text-foreground">
-              Companies
-            </p>
+          <div className="flex-1 text-left">
+            <h3 className="text-sm font-semibold text-foreground">Companies</h3>
             <p className="text-xs text-muted-foreground">
-              View all companies
+              {companies.length} business entities
             </p>
+          </div>
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex h-6 w-6 items-center justify-center border border-border bg-background group-hover:border-[#FBBB10]/50">
+              <ChevronRight className="h-3.5 w-3.5 text-muted-foreground group-hover:text-[#FBBB10]" />
+            </div>
+            {lastUpdated && (
+              <p className="text-[10px] text-muted-foreground whitespace-nowrap">
+                {formatTimestamp(lastUpdated)}
+              </p>
+            )}
           </div>
         </button>
 

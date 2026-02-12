@@ -143,6 +143,7 @@ export default function Page() {
                 }}
                 onViewInvoiceMapping={() => setView("VIEW_INVOICE_MAPPING")}
                 onLogout={resetPortal}
+                companies={companies}
               />
             )}
 
@@ -160,7 +161,7 @@ export default function Page() {
 
             {view === "VIEW_COMPANIES" && (
               <ViewCompanies
-                companies={companies}
+                connectionId={connId}
                 onBack={() => setView("DASHBOARD")}
               />
             )}

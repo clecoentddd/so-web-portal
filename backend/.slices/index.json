@@ -3,7 +3,7 @@
     {
       "id": "3458764658242238242",
       "slice": "slice: Admin Connection",
-      "index": 3,
+      "index": 11,
       "context": "Socraft Client Web Portal",
       "folder": "adminconnection",
       "status": "Done"
@@ -11,7 +11,7 @@
     {
       "id": "3458764658242238249",
       "slice": "slice: Admin Connected",
-      "index": 5,
+      "index": 13,
       "context": "Socraft Client Web Portal",
       "folder": "adminconnected",
       "status": "Done"
@@ -35,7 +35,7 @@
     {
       "id": "3458764658242238239",
       "slice": "slice: Create Client Account",
-      "index": 13,
+      "index": 23,
       "context": "Socraft Client Web Portal",
       "folder": "createclientaccount",
       "status": "Done"
@@ -43,7 +43,7 @@
     {
       "id": "3458764658242238248",
       "slice": "slice: invitation to send",
-      "index": 15,
+      "index": 25,
       "context": "Socraft Client Web Portal",
       "folder": "invitationtosend",
       "status": "Created"
@@ -51,7 +51,7 @@
     {
       "id": "3458764658242238240",
       "slice": "slice: processor SMTP",
-      "index": 17,
+      "index": 27,
       "context": "Socraft Client Web Portal",
       "folder": "processorsmtp",
       "status": "Created"
@@ -59,7 +59,7 @@
     {
       "id": "3458764658242238245",
       "slice": "slice: Customer Account List",
-      "index": 19,
+      "index": 29,
       "context": "Socraft Client Web Portal",
       "folder": "customeraccountlist",
       "status": "Done"
@@ -67,7 +67,7 @@
     {
       "id": "3458764658242238246",
       "slice": "slice: Client Account Connection",
-      "index": 21,
+      "index": 31,
       "context": "Socraft Client Web Portal",
       "folder": "clientaccountconnection",
       "status": "Done"
@@ -75,7 +75,7 @@
     {
       "id": "3458764658242238244",
       "slice": "slice: client connecté",
-      "index": 23,
+      "index": 33,
       "context": "Socraft Client Web Portal",
       "folder": "clientconnecté",
       "status": "Informational"
@@ -83,7 +83,7 @@
     {
       "id": "3458764658242238241",
       "slice": "slice: Initiate Customer Session",
-      "index": 25,
+      "index": 35,
       "context": "Socraft Client Web Portal",
       "folder": "initiatecustomersession",
       "status": "Done"
@@ -91,7 +91,7 @@
     {
       "id": "3458764658242238247",
       "slice": "slice: Customer Sessions",
-      "index": 27,
+      "index": 37,
       "context": "Socraft Client Web Portal",
       "folder": "customersessions",
       "status": "Review"
@@ -99,7 +99,7 @@
     {
       "id": "3458764658242238235",
       "slice": "slice: Fetch Projects List From Boond",
-      "index": 29,
+      "index": 39,
       "context": "Socraft Client Web Portal",
       "folder": "fetchprojectslistfromboond",
       "status": "Done"
@@ -155,7 +155,7 @@
     {
       "id": "3458764658959347076",
       "slice": "slice: Request Invoice Document",
-      "index": 33,
+      "index": 51,
       "context": "Socraft Client Web Portal",
       "folder": "requestinvoicedocument",
       "status": "Created"
@@ -163,7 +163,7 @@
     {
       "id": "3458764659017958616",
       "slice": "slice: Request Invoice State Mapping Update",
-      "index": 11,
+      "index": 19,
       "context": "Socraft Client Web Portal",
       "folder": "requestinvoicestatemappingupdate",
       "status": "Created"
@@ -171,7 +171,7 @@
     {
       "id": "3458764659020480062",
       "slice": "slice: Invoice State Mapping To Fetch",
-      "index": 39,
+      "index": 21,
       "context": "Socraft Client Web Portal",
       "folder": "invoicestatemappingtofetch",
       "status": "Informational"
@@ -179,7 +179,7 @@
     {
       "id": "3458764659018185536",
       "slice": "slice: Fetch Invoice State Mapping",
-      "index": 1,
+      "index": 3,
       "context": "Socraft Client Web Portal",
       "folder": "fetchinvoicestatemapping",
       "status": "Done"
@@ -187,7 +187,7 @@
     {
       "id": "3458764659018059457",
       "slice": "slice: Invoice State Mapping",
-      "index": 37,
+      "index": 5,
       "context": "Socraft Client Web Portal",
       "folder": "invoicestatemapping",
       "status": "Created"
@@ -195,7 +195,7 @@
     {
       "id": "3458764659096410485",
       "slice": "slice: Initialize Settings",
-      "index": 35,
+      "index": 1,
       "context": "Socraft Client Web Portal",
       "folder": "initializesettings",
       "status": "Done"
@@ -215,6 +215,70 @@
       "context": "Socraft Client Web Portal",
       "folder": "companyorderlist",
       "status": "Created"
+    },
+    {
+      "id": "3458764659418189577",
+      "slice": "slice: Boond Companies Data",
+      "index": 9,
+      "context": "Socraft Client Web Portal",
+      "folder": "boondcompaniesdata",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659434039031",
+      "slice": "slice: Request Company List Update",
+      "index": 15,
+      "context": "Socraft Client Web Portal",
+      "folder": "requestcompanylistupdate",
+      "status": "InProgress"
+    },
+    {
+      "id": "3458764659435087291",
+      "slice": "slice: CompanyListLookUp",
+      "index": 17,
+      "context": "Socraft Client Web Portal",
+      "folder": "companylistlookup",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659413930530",
+      "slice": "slice: Boond Orders Data",
+      "index": 43,
+      "context": "Socraft Client Web Portal",
+      "folder": "boondordersdata",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659413046360",
+      "slice": "slice: FetchOrders",
+      "index": 45,
+      "context": "Socraft Client Web Portal",
+      "folder": "fetchorders",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659414841824",
+      "slice": "slice: Boond Invoices Data Adapter",
+      "index": 47,
+      "context": "Socraft Client Web Portal",
+      "folder": "boondinvoicesdataadapter",
+      "status": "Informational"
+    },
+    {
+      "id": "3458764659413524005",
+      "slice": "slice: Mark Invoices Fetched",
+      "index": 47,
+      "context": "Socraft Client Web Portal",
+      "folder": "markinvoicesfetched",
+      "status": "Done"
+    },
+    {
+      "id": "3458764659437273257",
+      "slice": "slice: Boond Invoice State Mapping Data",
+      "index": 3,
+      "context": "Socraft Client Web Portal",
+      "folder": "boondinvoicestatemappingdata",
+      "status": "Informational"
     }
   ]
 }

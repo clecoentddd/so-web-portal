@@ -18,6 +18,15 @@ export interface CustomerAccountLookupResponse {
     companyName: string;
 }
 
+export interface CompanyListLookupItem {
+    id: string;
+    companyId: number;
+    companyName: string;
+    settingsId: string;
+    connectionId: string;
+    timestamp: number;
+}
+
 export interface CustomerSessionResponse {
     sessionId: string;
     customerId: string;
@@ -148,5 +157,16 @@ export const adminService = {
 
     requestProjectDetails: async (sessionId: string, payload: { companyId: number, customerId: string, projectId: number }): Promise<void> => {
         await api.post(`/requestprojectdetails/${sessionId}`, payload);
+    },
+
+    fetchCompanyListLookup: async (): Promise<CompanyListLookupItem[]> => {
+        console.log('[Admin Service] Fetching company list lookup');
+        const response = await api.get<{ companies: CompanyListLookupItem[] }>('/companylistlookup');
+        return response.data.companies;
+    },
+
+    requestCompanyUpdate: async (settingsId: string, connectionId: string): Promise<void> => {
+        console.log(`[Admin Service] Requesting company list update for settings: ${settingsId}`);
+        await api.post(`/requestcompanylistupdate/${settingsId}?connectionId=${connectionId}`);
     }
 };

@@ -207,24 +207,33 @@ export const useAdmin = () => {
   /**
    * FETCH: Gets companies for the admin dropdown
    */
-  const fetchCompanies = async (connectionId: string, retryCount = 0) => {
+  const fetchCompanies = async (connectionId: string) => {
     setLoading(true);
+    setError(null);
     try {
-      const response = await fetch(`http://localhost:8080/listofcompanies/${connectionId}`);
-      if (!response.ok) throw new Error(`Server returned ${response.status}`);
-
-      const data = await response.json();
-      const hasCompanies = data.listOfCompanies && data.listOfCompanies.length > 0;
-
-      if (!hasCompanies && retryCount < 2) {
-        setTimeout(() => fetchCompanies(connectionId, retryCount + 1), 1000);
-        return;
-      }
-
-      setCompanies(data.listOfCompanies || []);
-      setError(null);
+      console.log('[useAdmin] Fetching companies via lookup service');
+      const data = await adminService.fetchCompanyListLookup();
+      setCompanies(data);
+      return data;
     } catch (err: any) {
-      setError("Failed to load companies");
+      console.error('[useAdmin] Failed to fetch companies:', err);
+      setError(err.message || 'Failed to fetch companies');
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const requestCompaniesUpdate = async (settingsId: string, connectionId: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      await adminService.requestCompanyUpdate(settingsId, connectionId);
+      console.log('[useAdmin] Company list update requested');
+    } catch (err: any) {
+      console.error('[useAdmin] Failed to request company update:', err);
+      setError(err.message || 'Failed to request company update');
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -249,9 +258,9 @@ export const useAdmin = () => {
   return {
     connect,
     customerConnect,
-    resolveCompany,
     createAccount,
     fetchCompanies,
+    requestCompaniesUpdate,
     fetchProjects,
     fetchCustomerAccounts,
     requestProjectDetails,

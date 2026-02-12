@@ -3,8 +3,9 @@ package boond.fetchcompanieslistfromboond.internal
 import boond.common.CompanyInfo
 import boond.common.Processor
 import boond.domain.commands.fetchcompanieslistfromboond.MarkListOfCompaniesFetchedCommand
-import boond.events.AdminConnectedEvent
+import boond.events.*
 import boond.fetchcompanieslistfromboond.internal.adapter.FetchBoondAPICompanyList
+import java.util.UUID
 import mu.KotlinLogging
 import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.eventhandling.EventHandler
@@ -15,47 +16,50 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 @Component
 class ProcessorFetchBoondCompaniesListProcessor(
-    private val commandGateway: CommandGateway,
-    private val boondAdapter: FetchBoondAPICompanyList
+        private val commandGateway: CommandGateway,
+        private val boondAdapter: FetchBoondAPICompanyList
 ) : Processor {
 
   private val logger = KotlinLogging.logger {}
 
   @EventHandler
-  fun on(event: AdminConnectedEvent) {
+  fun on(event: SettingsInitializedEvent) {
     logger.info {
-      "Admin ${event.adminEmail} connected. Fetching companies for connection ${event.connectionId}..."
+      "Settings ${event.settingsId} initialized. Fetching companies for connection ${event.connectionId}..."
     }
+    fetchAndDispatch(event.settingsId, event.connectionId)
+  }
 
-    // 1. Fetch the data from the adapter
-    // Note: Check if your adapter uses .fetch() or .fetchAll() to be consistent
+  @EventHandler
+  fun on(event: CompanyListUpdateRequestedEvent) {
+    logger.info { "Company list update requested for settings ${event.settingsId}. Fetching..." }
+    fetchAndDispatch(event.settingsId, event.connectionId)
+  }
+
+  private fun fetchAndDispatch(settingsId: UUID, connectionId: UUID) {
     val companiesInfo = boondAdapter.fetchAll()
-
-    // 2. Map to our shared CompanyInfo class
-    // Explicitly naming the parameter (e.g., 'c') and providing the type
-    // ensures Kotlin doesn't lose track of the properties.
     val companiesList =
-        companiesInfo.companies.map { c ->
-          CompanyInfo(companyId = c.companyId, companyName = c.companyName)
-        }
+            companiesInfo.companies.map { c ->
+              CompanyInfo(companyId = c.companyId, companyName = c.companyName)
+            }
 
     logger.info {
-      "Dispatching MarkListOfCompaniesFetchedCommand for connection: ${event.connectionId} (${companiesList.size} companies found)"
+      "Dispatching MarkListOfCompaniesFetchedCommand for settings: $settingsId (${companiesList.size} companies found)"
     }
 
-    // 3. Send the command with error handling
-    commandGateway
-        .send<Any>(
-            MarkListOfCompaniesFetchedCommand(
-                connectionId = event.connectionId,
-                adminEmail = event.adminEmail,
-                listOfCompanies = companiesList))
-        .exceptionally { throwable ->
-          logger.error(throwable) {
-            "FAILED to mark company list for connection ${event.connectionId}. " +
-                "Reason: ${throwable.message}"
-          }
-          null
-        }
+    commandGateway.send<Any>(
+                    boond.domain.commands.fetchcompanieslistfromboond
+                            .MarkListOfCompaniesFetchedCommand(
+                                    settingsId = settingsId,
+                                    connectionId = connectionId,
+                                    listOfCompanies = companiesList
+                            )
+            )
+            .exceptionally { throwable ->
+              logger.error(throwable) {
+                "FAILED to mark company list for settings $settingsId. Reason: ${throwable.message}"
+              }
+              null
+            }
   }
 }
