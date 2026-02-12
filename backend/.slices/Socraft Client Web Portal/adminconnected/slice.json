@@ -33,8 +33,10 @@
       ],
       "type": "READMODEL",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
       "dependencies": [
         {
           "id": "3458764659433747671",
@@ -53,6 +55,12 @@
           "type": "OUTBOUND",
           "title": "Create Client Account",
           "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764658242238222",
+          "type": "INBOUND",
+          "title": "Admin Connected",
+          "elementType": "EVENT"
         }
       ],
       "createsAggregate": false,
@@ -92,8 +100,10 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
       "dependencies": [
         {
           "id": "3458764659433747639",
@@ -142,8 +152,10 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
       "dependencies": [
         {
           "id": "3458764659017958328",
@@ -202,8 +214,10 @@
       ],
       "type": "SCREEN",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
       "dependencies": [
         {
           "id": "3458764658242238320",
@@ -232,5 +246,7 @@
   "tables": [],
   "specifications": [],
   "actors": [],
-  "aggregates": []
+  "aggregates": [
+    "Connection Admin"
+  ]
 }

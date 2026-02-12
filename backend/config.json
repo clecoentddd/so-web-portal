@@ -100,6 +100,12 @@
           ],
           "dependencies": [
             {
+              "id": "3458764659103710033",
+              "type": "OUTBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "3458764659095873109",
               "type": "INBOUND",
               "title": "Initialize Settings",
@@ -159,9 +165,175 @@
       ]
     },
     {
+      "id": "3458764659104926352",
+      "status": "Informational",
+      "index": 3,
+      "title": "slice: Settings to fetch",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764659103710033",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Settings to fetch",
+          "title": "Settings to fetch",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "settingsId",
+              "type": "UUID",
+              "example": "\"00000000-0000-0000-0000-000000000001\"",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "Settings",
+          "aggregateDependencies": [
+            "Settings"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764659018058958",
+              "type": "OUTBOUND",
+              "title": "FetchInvoiceStateMapping",
+              "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238259",
+              "type": "OUTBOUND",
+              "title": "processor Fetch Boond Companies List",
+              "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238224",
+              "type": "INBOUND",
+              "title": "List of Companies Fetched",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764659017837700",
+              "type": "INBOUND",
+              "title": "Invoice Mapping Updated",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764659095403230",
+              "type": "INBOUND",
+              "title": "SettingsInitialized",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764659017475085",
+              "type": "INBOUND",
+              "title": "Invoice State Mapping Update Requested",
+              "elementType": "EVENT"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": [
+        "Settings"
+      ]
+    },
+    {
+      "id": "3458764659457033122",
+      "status": "Informational",
+      "index": 5,
+      "title": "slice: Adapter Boond Invoice State Mapping Data",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764659436962393",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Adapter Boond Invoice State Mapping Data",
+          "title": "Boond Invoice State Mapping Data",
+          "fields": [
+            {
+              "name": "InvoiceStateMapping",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "code",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "label",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": true
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "default",
+          "aggregateDependencies": [],
+          "dependencies": [
+            {
+              "id": "3458764659018058958",
+              "type": "OUTBOUND",
+              "title": "FetchInvoiceStateMapping",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": []
+    },
+    {
       "id": "3458764659018185536",
       "status": "Done",
-      "index": 3,
+      "index": 7,
       "title": "slice: Fetch Invoice State Mapping",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -295,6 +467,12 @@
               "elementType": "READMODEL"
             },
             {
+              "id": "3458764659103710033",
+              "type": "OUTBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
+            },
+            {
               "id": "3458764659018058978",
               "type": "INBOUND",
               "title": "Mark Invoice Mapping Fetched",
@@ -371,12 +549,20 @@
               "type": "OUTBOUND",
               "title": "Mark Invoice Mapping Fetched",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764659103710033",
+              "type": "INBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764659436962393",
+              "type": "INBOUND",
+              "title": "Boond Invoice State Mapping Data",
+              "elementType": "READMODEL"
             }
           ],
-          "listElement": false,
-          "todoList": false,
-          "apiEndpoint": "",
-          "service": null,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,
@@ -394,8 +580,8 @@
     },
     {
       "id": "3458764659018059457",
-      "status": "Created",
-      "index": 5,
+      "status": "Done",
+      "index": 9,
       "title": "slice: Invoice State Mapping",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -551,9 +737,77 @@
       ]
     },
     {
+      "id": "3458764659457902886",
+      "status": "Informational",
+      "index": 11,
+      "title": "slice: Adapter Boond Companies Data",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764659418040801",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Adapter Boond Companies Data",
+          "title": "Boond Companies Data",
+          "fields": [
+            {
+              "name": "ListOfCompanies",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyName",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": true
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "default",
+          "aggregateDependencies": [],
+          "dependencies": [
+            {
+              "id": "3458764658242238259",
+              "type": "OUTBOUND",
+              "title": "processor Fetch Boond Companies List",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": []
+    },
+    {
       "id": "3458764658242238243",
       "status": "Done",
-      "index": 7,
+      "index": 13,
       "title": "slice: Fetch Companies List From Boond",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -568,11 +822,18 @@
           "title": "Mark List of Companies Fetched",
           "fields": [
             {
+              "name": "settingsId",
+              "idAttribute": true,
+              "type": "UUID",
+              "cardinality": "Single",
+              "subfields": []
+            },
+            {
               "name": "connectionId",
               "type": "UUID",
               "subfields": [],
               "cardinality": "Single",
-              "idAttribute": true
+              "idAttribute": false
             },
             {
               "name": "ListOfCompanies",
@@ -633,11 +894,18 @@
           "title": "List of Companies Fetched",
           "fields": [
             {
-              "name": "connectionId",
+              "name": "settingsId",
               "type": "UUID",
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": true
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
             },
             {
               "name": "ListOfCompanies",
@@ -666,6 +934,12 @@
             "Settings"
           ],
           "dependencies": [
+            {
+              "id": "3458764659103710033",
+              "type": "OUTBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
+            },
             {
               "id": "3458764658242238268",
               "type": "OUTBOUND",
@@ -749,8 +1023,24 @@
               "type": "OUTBOUND",
               "title": "Mark List of Companies Fetched",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764659418040801",
+              "type": "INBOUND",
+              "title": "Boond Companies Data",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764659103710033",
+              "type": "INBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
             }
           ],
+          "listElement": false,
+          "todoList": false,
+          "apiEndpoint": "",
+          "service": null,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,
@@ -769,7 +1059,7 @@
     {
       "id": "3458764658242238250",
       "status": "Done",
-      "index": 9,
+      "index": 15,
       "title": "slice: Company List Look Up",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -912,7 +1202,7 @@
     {
       "id": "3458764658242238242",
       "status": "Done",
-      "index": 11,
+      "index": 17,
       "title": "slice: Admin Connection",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -944,9 +1234,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238222",
+              "type": "OUTBOUND",
+              "title": "Admin Connected",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238254",
               "type": "INBOUND",
@@ -962,7 +1260,59 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238222",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Admin Connection",
+          "title": "Admin Connected",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "adminEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238263",
+              "type": "OUTBOUND",
+              "title": "Admin Connected",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238252",
+              "type": "INBOUND",
+              "title": "To connect",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [
         {
@@ -986,8 +1336,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238252",
@@ -1010,12 +1362,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Connection Admin"
+      ]
     },
     {
       "id": "3458764658242238249",
       "status": "Done",
-      "index": 13,
+      "index": 19,
       "title": "slice: Admin Connected",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -1048,8 +1402,10 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
             {
               "id": "3458764659433747671",
@@ -1068,6 +1424,12 @@
               "type": "OUTBOUND",
               "title": "Create Client Account",
               "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238222",
+              "type": "INBOUND",
+              "title": "Admin Connected",
+              "elementType": "EVENT"
             }
           ],
           "createsAggregate": false,
@@ -1107,8 +1469,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
             {
               "id": "3458764659433747639",
@@ -1157,8 +1521,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
             {
               "id": "3458764659017958328",
@@ -1217,8 +1583,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Connection Admin",
+          "aggregateDependencies": [
+            "Connection Admin"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238320",
@@ -1247,12 +1615,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Connection Admin"
+      ]
     },
     {
       "id": "3458764659434039031",
-      "status": "InProgress",
-      "index": 15,
+      "status": "Done",
+      "index": 21,
       "title": "slice: Request Company List Update",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -1432,7 +1802,7 @@
     {
       "id": "3458764659435087291",
       "status": "Informational",
-      "index": 17,
+      "index": 23,
       "title": "slice: CompanyListLookUp",
       "context": "Socraft Client Web Portal",
       "sliceType": "UNDEFINED",
@@ -1450,8 +1820,8 @@
     },
     {
       "id": "3458764659017958616",
-      "status": "Created",
-      "index": 19,
+      "status": "Done",
+      "index": 25,
       "title": "slice: Request Invoice State Mapping Update",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -1483,9 +1853,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Settings",
+          "aggregateDependencies": [
+            "Settings"
+          ],
           "dependencies": [
+            {
+              "id": "3458764659017475085",
+              "type": "OUTBOUND",
+              "title": "Invoice State Mapping Update Requested",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764659107464799",
               "type": "INBOUND",
@@ -1501,7 +1879,59 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764659017475085",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Request Invoice State Mapping Update",
+          "title": "Invoice State Mapping Update Requested",
+          "fields": [
+            {
+              "name": "settingsId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Settings",
+          "aggregateDependencies": [
+            "Settings"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764659103710033",
+              "type": "OUTBOUND",
+              "title": "Settings to fetch",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764659017958328",
+              "type": "INBOUND",
+              "title": "Update Invoice State Mapping",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [
         {
@@ -1531,8 +1961,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Settings",
+          "aggregateDependencies": [
+            "Settings"
+          ],
           "dependencies": [
             {
               "id": "3458764659017958328",
@@ -1561,12 +1993,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Settings"
+      ]
     },
     {
       "id": "3458764659020480062",
       "status": "Informational",
-      "index": 21,
+      "index": 27,
       "title": "slice: Invoice State Mapping To Fetch",
       "context": "Socraft Client Web Portal",
       "sliceType": "UNDEFINED",
@@ -1585,7 +2019,7 @@
     {
       "id": "3458764658242238239",
       "status": "Done",
-      "index": 23,
+      "index": 29,
       "title": "slice: Create Client Account",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -1634,9 +2068,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238229",
+              "type": "OUTBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238273",
               "type": "INBOUND",
@@ -1652,7 +2094,83 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238229",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Create Client Account",
+          "title": "Account Created",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238324",
+              "type": "OUTBOUND",
+              "title": "Customer Account List",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238283",
+              "type": "OUTBOUND",
+              "title": "invitation à envoyer",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238320",
+              "type": "INBOUND",
+              "title": "Create Account",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [
         {
@@ -1692,8 +2210,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238320",
@@ -1722,12 +2242,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238248",
       "status": "Created",
-      "index": 25,
+      "index": 31,
       "title": "slice: invitation to send",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -1778,14 +2300,28 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238279",
               "type": "OUTBOUND",
               "title": "processor SMTP",
               "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238230",
+              "type": "INBOUND",
+              "title": "Customer Details Email Sent",
+              "elementType": "EVENT"
+            },
+            {
+              "id": "3458764658242238229",
+              "type": "INBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
             }
           ],
           "createsAggregate": false,
@@ -1803,12 +2339,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238240",
       "status": "Created",
-      "index": 27,
+      "index": 33,
       "title": "slice: processor SMTP",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -1857,9 +2395,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238230",
+              "type": "OUTBOUND",
+              "title": "Customer Details Email Sent",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238279",
               "type": "INBOUND",
@@ -1875,7 +2421,77 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238230",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: processor SMTP",
+          "title": "Customer Details Email Sent",
+          "fields": [
+            {
+              "name": "connectionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238283",
+              "type": "OUTBOUND",
+              "title": "invitation à envoyer",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238281",
+              "type": "INBOUND",
+              "title": "Mark Email Sent",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [],
       "screenImages": [],
@@ -1926,8 +2542,10 @@
           ],
           "type": "AUTOMATION",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238281",
@@ -1953,12 +2571,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238245",
       "status": "Done",
-      "index": 29,
+      "index": 35,
       "title": "slice: Customer Account List",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -2001,14 +2621,22 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238290",
               "type": "OUTBOUND",
               "title": "Customer Connection To Account",
               "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238229",
+              "type": "INBOUND",
+              "title": "Account Created",
+              "elementType": "EVENT"
             }
           ],
           "listElement": true,
@@ -2056,8 +2684,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238288",
@@ -2086,12 +2716,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238246",
       "status": "Done",
-      "index": 31,
+      "index": 37,
       "title": "slice: Client Account Connection",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -2130,9 +2762,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238226",
+              "type": "OUTBOUND",
+              "title": "Customer Connected",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238290",
               "type": "INBOUND",
@@ -2148,7 +2788,67 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238226",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Client Account Connection",
+          "title": "Customer Connected",
+          "fields": [
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "clientEmail",
+              "type": "String",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "mapping": "ListOfCompanies",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238333",
+              "type": "OUTBOUND",
+              "title": "client connecté",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238288",
+              "type": "INBOUND",
+              "title": "To Connect To Account",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [
         {
@@ -2186,8 +2886,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238288",
@@ -2216,12 +2918,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238244",
       "status": "Informational",
-      "index": 33,
+      "index": 39,
       "title": "slice: client connecté",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -2262,14 +2966,22 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Account",
+          "aggregateDependencies": [
+            "Client Account"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238329",
               "type": "OUTBOUND",
               "title": "Session Processor",
               "elementType": "AUTOMATION"
+            },
+            {
+              "id": "3458764658242238226",
+              "type": "INBOUND",
+              "title": "Customer Connected",
+              "elementType": "EVENT"
             }
           ],
           "createsAggregate": false,
@@ -2287,12 +2999,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Account"
+      ]
     },
     {
       "id": "3458764658242238241",
       "status": "Done",
-      "index": 35,
+      "index": 41,
       "title": "slice: Initiate Customer Session",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -2510,7 +3224,7 @@
     {
       "id": "3458764658242238247",
       "status": "Review",
-      "index": 37,
+      "index": 43,
       "title": "slice: Customer Sessions",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -2526,14 +3240,6 @@
           "slice": "slice: Customer Sessions",
           "title": "Customer Sessions",
           "fields": [
-            {
-              "name": "sessionId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
-            },
             {
               "name": "clientEmail",
               "type": "String",
@@ -2555,6 +3261,14 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
+            },
+            {
+              "name": "sessionId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
             }
           ],
           "type": "READMODEL",
@@ -2564,6 +3278,12 @@
             "Client Session"
           ],
           "dependencies": [
+            {
+              "id": "3458764658242238302",
+              "type": "OUTBOUND",
+              "title": "processor Fetch Boond Projects List",
+              "elementType": "AUTOMATION"
+            },
             {
               "id": "3458764658242238234",
               "type": "INBOUND",
@@ -2591,9 +3311,109 @@
       ]
     },
     {
+      "id": "3458764659415569983",
+      "status": "Informational",
+      "index": 45,
+      "title": "slice: Boond Projects Data Adapter",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764659415283415",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Boond Projects Data Adapter",
+          "title": "Boond Projects Data Adapter",
+          "fields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "projectList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "projectId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectName",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectDescription",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "Startate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "EndDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "Status",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "AccountManager",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "default",
+          "aggregateDependencies": [],
+          "dependencies": [
+            {
+              "id": "3458764658242238302",
+              "type": "OUTBOUND",
+              "title": "processor Fetch Boond Projects List",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
+      "aggregates": []
+    },
+    {
       "id": "3458764658242238235",
       "status": "Done",
-      "index": 39,
+      "index": 47,
       "title": "slice: Fetch Projects List From Boond",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -2675,9 +3495,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238236",
+              "type": "OUTBOUND",
+              "title": "List of Projects Fetched",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238302",
               "type": "INBOUND",
@@ -2693,7 +3521,110 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238236",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Fetch Projects List From Boond",
+          "title": "List of Projects Fetched",
+          "fields": [
+            {
+              "name": "sessionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "projectList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "projectId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectName",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectDescription",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "Startate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "EndDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "Status",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "AccountManager",
+                  "type": "String",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238316",
+              "type": "OUTBOUND",
+              "title": "Company Project List",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238304",
+              "type": "INBOUND",
+              "title": "Mark List Of Projects Fetched",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [],
       "screenImages": [],
@@ -2777,14 +3708,28 @@
           ],
           "type": "AUTOMATION",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238304",
               "type": "OUTBOUND",
               "title": "Mark List Of Projects Fetched",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764659415283415",
+              "type": "INBOUND",
+              "title": "Boond Projects Data Adapter",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238306",
+              "type": "INBOUND",
+              "title": "Customer Sessions",
+              "elementType": "READMODEL"
             }
           ],
           "createsAggregate": false,
@@ -2945,12 +3890,14 @@
         }
       ],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Session"
+      ]
     },
     {
       "id": "3458764658242238218",
       "status": "Done",
-      "index": 41,
+      "index": 49,
       "title": "slice: Company Project List",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -3034,8 +3981,10 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238382",
@@ -3048,6 +3997,12 @@
               "type": "OUTBOUND",
               "title": "Project List",
               "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238236",
+              "type": "INBOUND",
+              "title": "List of Projects Fetched",
+              "elementType": "EVENT"
             }
           ],
           "createsAggregate": false,
@@ -3137,8 +4092,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238316",
@@ -3161,12 +4118,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Session"
+      ]
     },
     {
       "id": "3458764659413930530",
       "status": "Informational",
-      "index": 43,
+      "index": 51,
       "title": "slice: Boond Orders Data",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -3266,7 +4225,7 @@
     {
       "id": "3458764659413046360",
       "status": "Done",
-      "index": 45,
+      "index": 53,
       "title": "slice: FetchOrders",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -3348,9 +4307,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238372",
+              "type": "OUTBOUND",
+              "title": "Orders Fetched",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238382",
               "type": "INBOUND",
@@ -3366,7 +4333,104 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238372",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: FetchOrders",
+          "title": "Orders Fetched",
+          "fields": [
+            {
+              "name": "sessionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "orderList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "reference",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "title",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "state",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "orderDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "startDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "endDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalVat",
+                  "type": "Double",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238373",
+              "type": "INBOUND",
+              "title": "Mark Orders Fetched",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [],
       "screenImages": [],
@@ -3458,8 +4522,10 @@
           ],
           "type": "AUTOMATION",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238373",
@@ -3491,12 +4557,144 @@
       "tables": [],
       "specifications": [],
       "actors": [],
+      "aggregates": [
+        "Client Session"
+      ]
+    },
+    {
+      "id": "3458764659459180592",
+      "status": "Informational",
+      "index": 55,
+      "title": "slice: Boond Invoices Data Adapter",
+      "context": "Socraft Client Web Portal",
+      "sliceType": "STATE_VIEW",
+      "commands": [],
+      "events": [],
+      "readmodels": [
+        {
+          "id": "3458764659414841221",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Boond Invoices Data Adapter",
+          "title": "Boond Invoices Data",
+          "fields": [
+            {
+              "name": "companyId",
+              "type": "Long",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "invoiceList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "invoiceId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "orderId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "reference",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "title",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "state",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "creationDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "dueDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "paymentDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalExcludingTaxes",
+                  "type": "Double",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalIncludingTaxes",
+                  "type": "Double",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalVat",
+                  "type": "Double",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "READMODEL",
+          "description": "",
+          "aggregate": "default",
+          "aggregateDependencies": [],
+          "dependencies": [
+            {
+              "id": "3458764658242238311",
+              "type": "OUTBOUND",
+              "title": "Fetch Invoice Automation",
+              "elementType": "AUTOMATION"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
+      "screens": [],
+      "screenImages": [],
+      "screenLayouts": [],
+      "processors": [],
+      "tables": [],
+      "specifications": [],
+      "actors": [],
       "aggregates": []
     },
     {
       "id": "3458764659413524005",
       "status": "Done",
-      "index": 47,
+      "index": 57,
       "title": "slice: Mark Invoices Fetched",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -3608,9 +4806,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658242238233",
+              "type": "OUTBOUND",
+              "title": "Invoices Fetched",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238311",
               "type": "INBOUND",
@@ -3626,7 +4832,140 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658242238233",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Mark Invoices Fetched",
+          "title": "Invoices Fetched",
+          "fields": [
+            {
+              "name": "sessionId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
+              "name": "companyId",
+              "type": "Long",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "customerId",
+              "type": "UUID",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": false
+            },
+            {
+              "name": "invoiceList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "invoiceId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "companyId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "projectId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "orderId",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "reference",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "title",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "state",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "creationDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "dueDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "paymentDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalExcludingTaxes",
+                  "type": "Double",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalIncludingTaxes",
+                  "type": "Double",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalVat",
+                  "type": "Double",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658242238342",
+              "type": "OUTBOUND",
+              "title": "Invoice List",
+              "elementType": "READMODEL"
+            },
+            {
+              "id": "3458764658242238313",
+              "type": "INBOUND",
+              "title": "Mark Invoices Fetched",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [],
       "screenImages": [],
@@ -3736,20 +5075,76 @@
               ],
               "cardinality": "List",
               "idAttribute": false
+            },
+            {
+              "name": "orderList",
+              "type": "Custom",
+              "generated": true,
+              "subfields": [
+                {
+                  "name": "reference",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "title",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "state",
+                  "type": "Long",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "orderDate",
+                  "type": "Date",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "startDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "endDate",
+                  "type": "String",
+                  "cardinality": "Single"
+                },
+                {
+                  "name": "totalVat",
+                  "type": "Double",
+                  "cardinality": "Single"
+                }
+              ],
+              "cardinality": "List",
+              "idAttribute": false
             }
           ],
           "type": "AUTOMATION",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238313",
               "type": "OUTBOUND",
               "title": "Mark Invoices Fetched",
               "elementType": "COMMAND"
+            },
+            {
+              "id": "3458764659414841221",
+              "type": "INBOUND",
+              "title": "Boond Invoices Data",
+              "elementType": "READMODEL"
             }
           ],
+          "listElement": false,
+          "todoList": false,
+          "apiEndpoint": "",
+          "service": null,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,
@@ -3761,12 +5156,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Session"
+      ]
     },
     {
       "id": "3458764658242238217",
       "status": "Done",
-      "index": 49,
+      "index": 59,
       "title": "slice: Company Invoices",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_VIEW",
@@ -3880,14 +5277,22 @@
           ],
           "type": "READMODEL",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658242238364",
               "type": "OUTBOUND",
               "title": "Company Invoices",
               "elementType": "SCREEN"
+            },
+            {
+              "id": "3458764658242238233",
+              "type": "INBOUND",
+              "title": "Invoices Fetched",
+              "elementType": "EVENT"
             }
           ],
           "createsAggregate": false,
@@ -4007,8 +5412,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658958764872",
@@ -4037,12 +5444,14 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Session"
+      ]
     },
     {
       "id": "3458764658959347076",
       "status": "Created",
-      "index": 51,
+      "index": 61,
       "title": "slice: Request Invoice Document",
       "context": "Socraft Client Web Portal",
       "sliceType": "STATE_CHANGE",
@@ -4067,9 +5476,17 @@
           ],
           "type": "COMMAND",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
+            {
+              "id": "3458764658958485544",
+              "type": "OUTBOUND",
+              "title": "Invoice Document Requested",
+              "elementType": "EVENT"
+            },
             {
               "id": "3458764658242238364",
               "type": "INBOUND",
@@ -4085,7 +5502,47 @@
           }
         }
       ],
-      "events": [],
+      "events": [
+        {
+          "id": "3458764658958485544",
+          "tags": [],
+          "elementContext": "INTERNAL",
+          "modelContext": "Socraft Client Web Portal",
+          "context": "INTERNAL",
+          "slice": "slice: Request Invoice Document",
+          "title": "Invoice Document Requested",
+          "fields": [
+            {
+              "name": "invoiceId",
+              "type": "Long",
+              "mapping": "InvoiceList",
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            }
+          ],
+          "type": "EVENT",
+          "description": "",
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
+          "dependencies": [
+            {
+              "id": "3458764658958764872",
+              "type": "INBOUND",
+              "title": "Request Invoice Document",
+              "elementType": "COMMAND"
+            }
+          ],
+          "createsAggregate": false,
+          "triggers": [],
+          "sketched": false,
+          "prototype": {
+            "activeByDefault": false
+          }
+        }
+      ],
       "readmodels": [],
       "screens": [
         {
@@ -4196,8 +5653,10 @@
           ],
           "type": "SCREEN",
           "description": "",
-          "aggregate": "default",
-          "aggregateDependencies": [],
+          "aggregate": "Client Session",
+          "aggregateDependencies": [
+            "Client Session"
+          ],
           "dependencies": [
             {
               "id": "3458764658958764872",
@@ -4226,7 +5685,9 @@
       "tables": [],
       "specifications": [],
       "actors": [],
-      "aggregates": []
+      "aggregates": [
+        "Client Session"
+      ]
     }
   ],
   "flows": [],
@@ -4234,6 +5695,18 @@
     {
       "id": "3458764659018613768",
       "title": "Settings",
+      "fields": [],
+      "type": "AGGREGATE"
+    },
+    {
+      "id": "3458764658242238223",
+      "title": "Connection Admin",
+      "fields": [],
+      "type": "AGGREGATE"
+    },
+    {
+      "id": "3458764658242238227",
+      "title": "Client Account",
       "fields": [],
       "type": "AGGREGATE"
     },

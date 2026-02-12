@@ -51,14 +51,28 @@
       ],
       "type": "READMODEL",
       "description": "",
-      "aggregate": "default",
-      "aggregateDependencies": [],
+      "aggregate": "Client Account",
+      "aggregateDependencies": [
+        "Client Account"
+      ],
       "dependencies": [
         {
           "id": "3458764658242238279",
           "type": "OUTBOUND",
           "title": "processor SMTP",
           "elementType": "AUTOMATION"
+        },
+        {
+          "id": "3458764658242238230",
+          "type": "INBOUND",
+          "title": "Customer Details Email Sent",
+          "elementType": "EVENT"
+        },
+        {
+          "id": "3458764658242238229",
+          "type": "INBOUND",
+          "title": "Account Created",
+          "elementType": "EVENT"
         }
       ],
       "createsAggregate": false,
@@ -76,5 +90,7 @@
   "tables": [],
   "specifications": [],
   "actors": [],
-  "aggregates": []
+  "aggregates": [
+    "Client Account"
+  ]
 }

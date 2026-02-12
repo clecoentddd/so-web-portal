@@ -15,11 +15,18 @@
       "title": "Mark List of Companies Fetched",
       "fields": [
         {
+          "name": "settingsId",
+          "idAttribute": true,
+          "type": "UUID",
+          "cardinality": "Single",
+          "subfields": []
+        },
+        {
           "name": "connectionId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
-          "idAttribute": true
+          "idAttribute": false
         },
         {
           "name": "ListOfCompanies",
@@ -80,11 +87,18 @@
       "title": "List of Companies Fetched",
       "fields": [
         {
-          "name": "connectionId",
+          "name": "settingsId",
           "type": "UUID",
           "subfields": [],
           "cardinality": "Single",
           "idAttribute": true
+        },
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
         },
         {
           "name": "ListOfCompanies",
@@ -113,6 +127,12 @@
         "Settings"
       ],
       "dependencies": [
+        {
+          "id": "3458764659103710033",
+          "type": "OUTBOUND",
+          "title": "Settings to fetch",
+          "elementType": "READMODEL"
+        },
         {
           "id": "3458764658242238268",
           "type": "OUTBOUND",
@@ -196,8 +216,24 @@
           "type": "OUTBOUND",
           "title": "Mark List of Companies Fetched",
           "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764659418040801",
+          "type": "INBOUND",
+          "title": "Boond Companies Data",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764659103710033",
+          "type": "INBOUND",
+          "title": "Settings to fetch",
+          "elementType": "READMODEL"
         }
       ],
+      "listElement": false,
+      "todoList": false,
+      "apiEndpoint": "",
+      "service": null,
       "createsAggregate": false,
       "triggers": [],
       "sketched": false,
