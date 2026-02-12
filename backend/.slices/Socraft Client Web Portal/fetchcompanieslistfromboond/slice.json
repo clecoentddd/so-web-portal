@@ -128,15 +128,15 @@
       ],
       "dependencies": [
         {
-          "id": "3458764658242238268",
-          "type": "OUTBOUND",
-          "title": "CompanyListLookUp",
-          "elementType": "READMODEL"
-        },
-        {
           "id": "3458764658242238263",
           "type": "OUTBOUND",
           "title": "Admin Connected",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238268",
+          "type": "OUTBOUND",
+          "title": "CompanyListLookUp",
           "elementType": "READMODEL"
         },
         {

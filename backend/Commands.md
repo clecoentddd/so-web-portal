@@ -40,3 +40,29 @@ git clone <frontend-repo-url> temp-frontend
 Copy-Item -Recurse temp-frontend/* ./frontend/
 Remove-Item -Recurse temp-frontend
 
+# cleaning DB
+docker exec -it backend-postgres-1 psql -U postgres -d postgres-so-portal
+
+Use control-D to quit.
+
+TRUNCATE TABLE
+    admin_connected_read_model_entity,
+    company_invoice_list_items,
+    company_list_lookup,
+    company_order_list_projections,
+    company_project_list_read_model_entity,
+    companyorderlist_order_items,
+    customer_account_list_read_model_entity,
+    customer_sessions_read_model_entity,
+    invoice_list_read_model_entity,
+    projection_session_projects,
+    invoice_state_mapping,
+    token_entry,
+    domain_event_entry,
+    association_value_entry,
+    saga_entry,
+    snapshot_event_entry,
+    event_publication,
+    dead_letter_entry
+RESTART IDENTITY CASCADE;
+

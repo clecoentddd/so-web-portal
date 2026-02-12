@@ -160,15 +160,16 @@ class WireMockConfig(
                     .withStatus(200)
                     .withHeader("Content-Type", "application/json")
                     .withBodyFile("boond/orders-791.json")))
-    // Reporting Projects endpoint
+
+    // Invoice states mapping endpoint
     wireMockServer.stubFor(
-        WireMock.get(WireMock.urlPathEqualTo("/api/v1/reportingProjects"))
+        WireMock.get(WireMock.urlPathEqualTo("/api/v1/admin/invoices/states"))
             .withHeader("Authorization", WireMock.matching("Bearer .*"))
             .willReturn(
                 WireMock.aResponse()
                     .withStatus(200)
                     .withHeader("Content-Type", "application/json")
-                    .withBodyFile("boond/reporting-projects.json")))
+                    .withBodyFile("boond/invoice-states.json")))
 
     // Missing token error
     wireMockServer.stubFor(

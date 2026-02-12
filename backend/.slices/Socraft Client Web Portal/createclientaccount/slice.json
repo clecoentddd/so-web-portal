@@ -203,15 +203,15 @@
           "elementType": "COMMAND"
         },
         {
-          "id": "3458764658242238268",
-          "type": "INBOUND",
-          "title": "CompanyListLookUp",
-          "elementType": "READMODEL"
-        },
-        {
           "id": "3458764658242238263",
           "type": "INBOUND",
           "title": "Admin Connected",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238268",
+          "type": "INBOUND",
+          "title": "CompanyListLookUp",
           "elementType": "READMODEL"
         }
       ],

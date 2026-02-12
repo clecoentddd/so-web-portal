@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import {
     Dialog,
     DialogContent,
@@ -11,6 +12,15 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Loader2, FileText, Calendar, AlertCircle, Receipt, Clock } from "lucide-react"
 import { OrderInfo, InvoiceInfo } from "@/app/api/orderService"
+
+interface InvoiceStateMapping {
+    id: string
+    settingsId: string
+    code: number
+    label: string
+    connectionId: string
+    timestamp: number
+}
 
 interface OrdersModalProps {
     isOpen: boolean
@@ -35,6 +45,38 @@ export function OrdersModal({
     orders,
     invoices,
 }: OrdersModalProps) {
+    const [invoiceStateMapping, setInvoiceStateMapping] = useState<Map<number, string>>(new Map())
+
+    // Fetch invoice state mapping once when invoices are loaded
+    useEffect(() => {
+        const fetchInvoiceStateMapping = async () => {
+            try {
+                const response = await fetch('http://localhost:8080/invoicestatemapping', {
+                    method: 'GET',
+                    headers: {
+                        'accept': '*/*',
+                    },
+                })
+
+                if (response.ok) {
+                    const data: InvoiceStateMapping[] = await response.json()
+                    const mapping = new Map<number, string>()
+                    data.forEach(item => {
+                        mapping.set(item.code, item.label)
+                    })
+                    setInvoiceStateMapping(mapping)
+                    console.log('[OrdersModal] Invoice state mapping loaded:', mapping)
+                }
+            } catch (error) {
+                console.error('[OrdersModal] Failed to fetch invoice state mapping:', error)
+            }
+        }
+
+        // Fetch mapping once when invoices are available
+        if (invoices.length > 0 && invoiceStateMapping.size === 0) {
+            fetchInvoiceStateMapping()
+        }
+    }, [invoices.length])
 
     const formatCurrency = (amount: number) => {
         return new Intl.NumberFormat('fr-CH', {
@@ -53,11 +95,9 @@ export function OrdersModal({
     }
 
     const getInvoiceStateLabel = (state: number) => {
-        switch (state) {
-            case 1: return "Issued";
-            case 2: return "Paid";
-            default: return `State ${state}`;
-        }
+        // Use the fetched mapping if available, otherwise fall back to state number
+        const label = invoiceStateMapping.get(state)
+        return label || `State ${state}`
     }
 
     return (

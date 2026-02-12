@@ -39,16 +39,22 @@
       ],
       "dependencies": [
         {
-          "id": "3458764658242238259",
+          "id": "3458764659107464799",
           "type": "OUTBOUND",
-          "title": "processor Fetch Boond Companies List",
-          "elementType": "AUTOMATION"
+          "title": "Invoice State Mapping Table",
+          "elementType": "SCREEN"
         },
         {
           "id": "3458764658242238273",
           "type": "OUTBOUND",
           "title": "Create Client Account",
           "elementType": "SCREEN"
+        },
+        {
+          "id": "3458764658242238259",
+          "type": "OUTBOUND",
+          "title": "processor Fetch Boond Companies List",
+          "elementType": "AUTOMATION"
         },
         {
           "id": "3458764658242238224",
@@ -72,6 +78,58 @@
     }
   ],
   "screens": [
+    {
+      "id": "3458764659107464799",
+      "tags": [],
+      "groupId": "3458764659107464816",
+      "elementContext": "INTERNAL",
+      "modelContext": "Socraft Client Web Portal",
+      "context": "INTERNAL",
+      "slice": "slice: Admin Connected",
+      "title": "Invoice State Mapping Table",
+      "fields": [
+        {
+          "name": "connectionId",
+          "type": "UUID",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": true
+        },
+        {
+          "name": "adminEmail",
+          "type": "String",
+          "subfields": [],
+          "cardinality": "Single",
+          "idAttribute": false
+        }
+      ],
+      "type": "SCREEN",
+      "description": "",
+      "aggregate": "Connection Admin",
+      "aggregateDependencies": [
+        "Connection Admin"
+      ],
+      "dependencies": [
+        {
+          "id": "3458764659017958328",
+          "type": "OUTBOUND",
+          "title": "Update Invoice State Mapping",
+          "elementType": "COMMAND"
+        },
+        {
+          "id": "3458764658242238263",
+          "type": "INBOUND",
+          "title": "Admin Connected",
+          "elementType": "READMODEL"
+        }
+      ],
+      "createsAggregate": false,
+      "triggers": [],
+      "sketched": false,
+      "prototype": {
+        "activeByDefault": false
+      }
+    },
     {
       "id": "3458764658242238273",
       "tags": [],
@@ -121,15 +179,15 @@
           "elementType": "COMMAND"
         },
         {
-          "id": "3458764658242238268",
-          "type": "INBOUND",
-          "title": "CompanyListLookUp",
-          "elementType": "READMODEL"
-        },
-        {
           "id": "3458764658242238263",
           "type": "INBOUND",
           "title": "Admin Connected",
+          "elementType": "READMODEL"
+        },
+        {
+          "id": "3458764658242238268",
+          "type": "INBOUND",
+          "title": "CompanyListLookUp",
           "elementType": "READMODEL"
         }
       ],

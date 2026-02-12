@@ -11,6 +11,7 @@ import { AdminDashboard } from "@/components/portal/admin-dashboard"
 import { CreateAccount } from "@/components/portal/create-account"
 import { ViewCompanies } from "@/components/portal/view-companies"
 import { ViewCustomers } from "@/components/portal/view-customers"
+import { ViewInvoiceMapping } from "@/components/portal/view-invoice-mapping"
 import { CustomerConnect } from "@/components/portal/customer-connect"
 import { CustomerDashboard } from "@/components/portal/customer-dashboard"
 import { ErrorBanner } from "@/components/portal/error-banner"
@@ -24,6 +25,7 @@ type View =
   | "CREATE_ACCOUNT"
   | "VIEW_COMPANIES"
   | "VIEW_CUSTOMERS"
+  | "VIEW_INVOICE_MAPPING"
   | "CUSTOMER_DASHBOARD"
 type DashboardMode = "WELCOME" | "LIST"
 
@@ -139,6 +141,7 @@ export default function Page() {
                   fetchCustomerAccounts()
                   setView("VIEW_CUSTOMERS")
                 }}
+                onViewInvoiceMapping={() => setView("VIEW_INVOICE_MAPPING")}
                 onLogout={resetPortal}
               />
             )}
@@ -165,6 +168,13 @@ export default function Page() {
             {view === "VIEW_CUSTOMERS" && (
               <ViewCustomers
                 accounts={customerAccounts}
+                onBack={() => setView("DASHBOARD")}
+              />
+            )}
+
+            {view === "VIEW_INVOICE_MAPPING" && (
+              <ViewInvoiceMapping
+                connectionId={connId}
                 onBack={() => setView("DASHBOARD")}
               />
             )}

@@ -1,6 +1,6 @@
 "use client"
 
-import { UserPlus, Building2, Terminal, Users } from "lucide-react"
+import { UserPlus, Building2, Terminal, Users, FileText } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 
 interface AdminDashboardProps {
@@ -8,6 +8,7 @@ interface AdminDashboardProps {
   onCreateAccount: () => void
   onViewCompanies: () => void
   onViewCustomers: () => void
+  onViewInvoiceMapping: () => void
   onLogout: () => void
 }
 
@@ -16,6 +17,7 @@ export function AdminDashboard({
   onCreateAccount,
   onViewCompanies,
   onViewCustomers,
+  onViewInvoiceMapping,
 }: AdminDashboardProps) {
   return (
     <div className="py-4">
@@ -102,6 +104,24 @@ export function AdminDashboard({
             </p>
             <p className="text-xs text-muted-foreground">
               See account list
+            </p>
+          </div>
+        </button>
+
+        <button
+          type="button"
+          onClick={onViewInvoiceMapping}
+          className="group flex items-center gap-4 border border-border bg-secondary/50 px-5 py-5 transition-all duration-200 hover:border-[#FBBB10] hover:bg-secondary"
+        >
+          <div className="flex h-10 w-10 items-center justify-center border border-border bg-background transition-colors group-hover:border-[#FBBB10]/50">
+            <FileText className="h-4 w-4 text-muted-foreground transition-colors group-hover:text-[#FBBB10]" />
+          </div>
+          <div className="text-left">
+            <p className="text-sm font-semibold uppercase tracking-wider text-foreground">
+              Invoice State Mapping
+            </p>
+            <p className="text-xs text-muted-foreground">
+              View state mapping
             </p>
           </div>
         </button>
