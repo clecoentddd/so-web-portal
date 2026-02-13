@@ -158,7 +158,82 @@
         }
       ],
       "tables": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "vertical": false,
+          "id": "3458764659471271117",
+          "sliceName": "slice: Initialize Settings",
+          "title": "spec: Initialize Settings",
+          "given": [],
+          "when": [
+            {
+              "title": "Initialize Settings",
+              "tags": [],
+              "examples": [],
+              "id": "3458764659471271119",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_COMMAND",
+              "fields": [
+                {
+                  "name": "settingsId",
+                  "type": "UUID",
+                  "example": "00000000-0000-0000-0000-000000000001",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true
+                },
+                {
+                  "name": "connectionId",
+                  "type": "UUID",
+                  "example": "11111111-1111-1111-1111-111111111111",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single"
+                }
+              ],
+              "linkedId": "3458764659095873109"
+            }
+          ],
+          "then": [
+            {
+              "title": "SettingsInitialized",
+              "tags": [],
+              "examples": [],
+              "id": "3458764659471271122",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "settingsId",
+                  "type": "UUID",
+                  "example": "00000000-0000-0000-0000-000000000001",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true
+                },
+                {
+                  "name": "connectionId",
+                  "type": "UUID",
+                  "example": "11111111-1111-1111-1111-111111111111",
+                  "subfields": [],
+                  "cardinality": "Single"
+                }
+              ],
+              "linkedId": "3458764659095403230"
+            }
+          ],
+          "comments": [
+            {
+              "description": "Check Aggregate is created"
+            }
+          ],
+          "linkedId": "3458764659096410485"
+        }
+      ],
       "actors": [],
       "aggregates": [
         "Settings"
@@ -227,7 +302,7 @@
             {
               "id": "3458764659017837700",
               "type": "INBOUND",
-              "title": "Invoice Mapping Updated",
+              "title": "Invoice State Mapping Updated",
               "elementType": "EVENT"
             },
             {
@@ -345,7 +420,7 @@
           "modelContext": "Socraft Client Web Portal",
           "context": "INTERNAL",
           "slice": "slice: Fetch Invoice State Mapping",
-          "title": "Mark Invoice Mapping Fetched",
+          "title": "Mark Invoice State Mapping Fetched",
           "fields": [
             {
               "name": "settingsId",
@@ -391,7 +466,7 @@
             {
               "id": "3458764659017837700",
               "type": "OUTBOUND",
-              "title": "Invoice Mapping Updated",
+              "title": "Invoice State Mapping Updated",
               "elementType": "EVENT"
             },
             {
@@ -417,7 +492,7 @@
           "modelContext": "Socraft Client Web Portal",
           "context": "INTERNAL",
           "slice": "slice: Fetch Invoice State Mapping",
-          "title": "Invoice Mapping Updated",
+          "title": "Invoice State Mapping Updated",
           "fields": [
             {
               "name": "settingsId",
@@ -475,7 +550,7 @@
             {
               "id": "3458764659018058978",
               "type": "INBOUND",
-              "title": "Mark Invoice Mapping Fetched",
+              "title": "Mark Invoice State Mapping Fetched",
               "elementType": "COMMAND"
             }
           ],
@@ -547,7 +622,7 @@
             {
               "id": "3458764659018058978",
               "type": "OUTBOUND",
-              "title": "Mark Invoice Mapping Fetched",
+              "title": "Mark Invoice State Mapping Fetched",
               "elementType": "COMMAND"
             },
             {
@@ -572,7 +647,97 @@
         }
       ],
       "tables": [],
-      "specifications": [],
+      "specifications": [
+        {
+          "vertical": false,
+          "id": "3458764659517742985",
+          "sliceName": "slice: Fetch Invoice State Mapping",
+          "title": "spec: Fetch Invoice State Mapping Check Update",
+          "given": [
+            {
+              "title": "SettingsInitialized",
+              "tags": [],
+              "id": "3458764659517742999",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "settingsId",
+                  "type": "UUID",
+                  "example": "\"00000000-0000-0000-0000-000000000001\"",
+                  "generated": true,
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true
+                },
+                {
+                  "name": "connectionId",
+                  "type": "UUID",
+                  "example": "SYSTEM-CONNECTION-000001",
+                  "subfields": [],
+                  "cardinality": "Single"
+                }
+              ],
+              "linkedId": "3458764659095403230"
+            }
+          ],
+          "when": [],
+          "then": [
+            {
+              "title": "Invoice State Mapping Updated",
+              "tags": [],
+              "id": "3458764659517742992",
+              "index": 0,
+              "specRow": -1,
+              "type": "SPEC_EVENT",
+              "fields": [
+                {
+                  "name": "settingsId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "idAttribute": true,
+                  "example": ""
+                },
+                {
+                  "name": "connectionId",
+                  "type": "UUID",
+                  "subfields": [],
+                  "cardinality": "Single",
+                  "example": ""
+                },
+                {
+                  "name": "InvoiceStateMapping",
+                  "type": "Custom",
+                  "generated": true,
+                  "subfields": [
+                    {
+                      "name": "code",
+                      "type": "Long",
+                      "cardinality": "Single"
+                    },
+                    {
+                      "name": "label",
+                      "type": "String",
+                      "cardinality": "Single"
+                    }
+                  ],
+                  "cardinality": "List",
+                  "example": ""
+                }
+              ],
+              "linkedId": "3458764659017837700"
+            }
+          ],
+          "comments": [
+            {
+              "description": "Check processor fetch Invoice State Mapping Data"
+            }
+          ],
+          "linkedId": "3458764659018185536"
+        }
+      ],
       "actors": [],
       "aggregates": [
         "Settings"
@@ -647,7 +812,7 @@
             {
               "id": "3458764659017837700",
               "type": "INBOUND",
-              "title": "Invoice Mapping Updated",
+              "title": "Invoice State Mapping Updated",
               "elementType": "EVENT"
             }
           ],
@@ -1037,10 +1202,6 @@
               "elementType": "READMODEL"
             }
           ],
-          "listElement": false,
-          "todoList": false,
-          "apiEndpoint": "",
-          "service": null,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,
@@ -3241,6 +3402,14 @@
           "title": "Customer Sessions",
           "fields": [
             {
+              "name": "sessionId",
+              "type": "UUID",
+              "generated": true,
+              "subfields": [],
+              "cardinality": "Single",
+              "idAttribute": true
+            },
+            {
               "name": "clientEmail",
               "type": "String",
               "subfields": [],
@@ -3261,14 +3430,6 @@
               "subfields": [],
               "cardinality": "Single",
               "idAttribute": false
-            },
-            {
-              "name": "sessionId",
-              "type": "UUID",
-              "generated": true,
-              "subfields": [],
-              "cardinality": "Single",
-              "idAttribute": true
             }
           ],
           "type": "READMODEL",
@@ -5141,10 +5302,6 @@
               "elementType": "READMODEL"
             }
           ],
-          "listElement": false,
-          "todoList": false,
-          "apiEndpoint": "",
-          "service": null,
           "createsAggregate": false,
           "triggers": [],
           "sketched": false,

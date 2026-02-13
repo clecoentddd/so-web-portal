@@ -16,8 +16,8 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 @Component
 class ProcessorFetchBoondCompaniesListProcessor(
-        private val commandGateway: CommandGateway,
-        private val boondAdapter: FetchBoondAPICompanyList
+    private val commandGateway: CommandGateway,
+    private val boondAdapter: FetchBoondAPICompanyList
 ) : Processor {
 
   private val logger = KotlinLogging.logger {}
@@ -39,27 +39,25 @@ class ProcessorFetchBoondCompaniesListProcessor(
   private fun fetchAndDispatch(settingsId: UUID, connectionId: UUID) {
     val companiesInfo = boondAdapter.fetchAll()
     val companiesList =
-            companiesInfo.companies.map { c ->
-              CompanyInfo(companyId = c.companyId, companyName = c.companyName)
-            }
+        companiesInfo.companies.map { c ->
+          CompanyInfo(companyId = c.companyId, companyName = c.companyName)
+        }
 
     logger.info {
       "Dispatching MarkListOfCompaniesFetchedCommand for settings: $settingsId (${companiesList.size} companies found)"
     }
 
-    commandGateway.send<Any>(
-                    boond.domain.commands.fetchcompanieslistfromboond
-                            .MarkListOfCompaniesFetchedCommand(
-                                    settingsId = settingsId,
-                                    connectionId = connectionId,
-                                    listOfCompanies = companiesList
-                            )
-            )
-            .exceptionally { throwable ->
-              logger.error(throwable) {
-                "FAILED to mark company list for settings $settingsId. Reason: ${throwable.message}"
-              }
-              null
-            }
+    commandGateway
+        .send<Any>(
+            boond.domain.commands.fetchcompanieslistfromboond.MarkListOfCompaniesFetchedCommand(
+                settingsId = settingsId,
+                connectionId = connectionId,
+                listOfCompanies = companiesList))
+        .exceptionally { throwable ->
+          logger.error(throwable) {
+            "FAILED to mark company list for settings $settingsId. Reason: ${throwable.message}"
+          }
+          null
+        }
   }
 }

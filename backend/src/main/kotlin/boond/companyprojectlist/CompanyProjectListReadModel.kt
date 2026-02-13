@@ -23,9 +23,7 @@ class CompanyProjectListReadModelEntity {
 
   @ElementCollection(fetch = FetchType.EAGER)
   @CollectionTable(
-          name = "projection_session_projects",
-          joinColumns = [JoinColumn(name = "session_id")]
-  )
+      name = "projection_session_projects", joinColumns = [JoinColumn(name = "session_id")])
   var projectList: MutableList<ProjectInfo> = mutableListOf()
 }
 

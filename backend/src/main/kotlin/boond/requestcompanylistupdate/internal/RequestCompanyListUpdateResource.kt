@@ -19,30 +19,24 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465943374
 @RestController
 class RequestCompanyListUpdateResource(private var commandGateway: CommandGateway) {
 
-        var logger = KotlinLogging.logger {}
+  var logger = KotlinLogging.logger {}
 
-        @CrossOrigin
-        @PostMapping("/debug/requestcompanylistupdate")
-        fun processDebugCommand(
-                @RequestParam settingsId: UUID,
-                @RequestParam connectionId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestCompanyListUpdateCommand(settingsId, connectionId)
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/debug/requestcompanylistupdate")
+  fun processDebugCommand(
+      @RequestParam settingsId: UUID,
+      @RequestParam connectionId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(RequestCompanyListUpdateCommand(settingsId, connectionId))
+  }
 
-        @CrossOrigin
-        @PostMapping("/requestcompanylistupdate/{settingsId}")
-        fun processCommand(
-                @PathVariable("settingsId") settingsId: UUID,
-                @RequestParam connectionId: UUID
-        ): CompletableFuture<Any> {
-                return commandGateway.send(
-                        RequestCompanyListUpdateCommand(
-                                settingsId = settingsId,
-                                connectionId = connectionId
-                        )
-                )
-        }
+  @CrossOrigin
+  @PostMapping("/requestcompanylistupdate/{settingsId}")
+  fun processCommand(
+      @PathVariable("settingsId") settingsId: UUID,
+      @RequestParam connectionId: UUID
+  ): CompletableFuture<Any> {
+    return commandGateway.send(
+        RequestCompanyListUpdateCommand(settingsId = settingsId, connectionId = connectionId))
+  }
 }

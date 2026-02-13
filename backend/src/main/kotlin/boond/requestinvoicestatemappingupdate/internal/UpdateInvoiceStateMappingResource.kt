@@ -23,7 +23,6 @@ class UpdateInvoiceStateMappingResource(private val commandGateway: CommandGatew
     logger.info { "Request invoice state mapping update for $connectionId" }
 
     return commandGateway.send(
-            UpdateInvoiceStateMappingCommand(SettingsConstants.SETTINGS_ID, connectionId)
-    )
+        UpdateInvoiceStateMappingCommand(SettingsConstants.SETTINGS_ID, connectionId))
   }
 }

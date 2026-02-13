@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class CompanyListLookUpReadModelQueryHandler(
-        private val repository: CompanyListLookUpReadModelRepository
+    private val repository: CompanyListLookUpReadModelRepository
 ) {
 
   @QueryHandler

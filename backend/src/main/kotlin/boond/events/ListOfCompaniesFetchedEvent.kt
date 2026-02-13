@@ -9,7 +9,7 @@ Boardlink: https://miro.com/app/board/uXjVIKUE2jo=/?moveToWidget=345876465824223
 */
 
 data class ListOfCompaniesFetchedEvent(
-        var settingsId: UUID? = null,
-        var connectionId: UUID? = null,
-        var listOfCompanies: List<CompanyInfo> = emptyList()
+    var settingsId: UUID? = null,
+    var connectionId: UUID? = null,
+    var listOfCompanies: List<CompanyInfo> = emptyList()
 ) : Event

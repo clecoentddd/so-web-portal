@@ -27,11 +27,11 @@ class CompanyListLookUpReadModelEntity : Serializable {
   constructor()
 
   constructor(
-          companyId: Long,
-          companyName: String,
-          settingsId: UUID?,
-          connectionId: UUID?,
-          timestamp: Long
+      companyId: Long,
+      companyName: String,
+      settingsId: UUID?,
+      connectionId: UUID?,
+      timestamp: Long
   ) {
     this.companyId = companyId
     this.companyName = companyName

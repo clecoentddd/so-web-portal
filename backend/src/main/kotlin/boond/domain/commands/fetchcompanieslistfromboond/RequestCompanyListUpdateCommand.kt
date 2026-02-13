@@ -5,6 +5,6 @@ import java.util.UUID
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 data class RequestCompanyListUpdateCommand(
-        @TargetAggregateIdentifier val settingsId: UUID,
-        val connectionId: UUID
+    @TargetAggregateIdentifier val settingsId: UUID,
+    val connectionId: UUID
 ) : Command

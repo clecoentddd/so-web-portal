@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class ProcessorFetchInvoiceStateMappingProcessor(
-        private val commandGateway: CommandGateway,
-        private val boondAdapter: FetchBoondAPIInvoiceStateMapping
+    private val commandGateway: CommandGateway,
+    private val boondAdapter: FetchBoondAPIInvoiceStateMapping
 ) : Processor {
 
   private val logger = KotlinLogging.logger {}
@@ -44,22 +44,21 @@ class ProcessorFetchInvoiceStateMappingProcessor(
     val stateMappingInfo = boondAdapter.fetchAll()
 
     val statesList =
-            stateMappingInfo.states.map { state ->
-              InvoiceStateMappingInfo(code = state.code, label = state.label)
-            }
+        stateMappingInfo.states.map { state ->
+          InvoiceStateMappingInfo(code = state.code, label = state.label)
+        }
 
-    commandGateway.send<Any>(
-                    MarkInvoiceStateMappingFetchedCommand(
-                            settingsId = settingsId,
-                            connectionId = connectionId,
-                            invoiceStateMapping = statesList
-                    )
-            )
-            .exceptionally { throwable ->
-              logger.error(throwable) {
-                "FAILED to mark invoice state mapping for connection $connectionId"
-              }
-              null
-            }
+    commandGateway
+        .send<Any>(
+            MarkInvoiceStateMappingFetchedCommand(
+                settingsId = settingsId,
+                connectionId = connectionId,
+                invoiceStateMapping = statesList))
+        .exceptionally { throwable ->
+          logger.error(throwable) {
+            "FAILED to mark invoice state mapping for connection $connectionId"
+          }
+          null
+        }
   }
 }

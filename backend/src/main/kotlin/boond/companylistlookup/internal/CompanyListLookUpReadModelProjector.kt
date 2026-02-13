@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 /** REPOSITORY: Standard JPA repository using UUID as the ID. */
 @Repository
 interface CompanyListLookUpReadModelRepository :
-        JpaRepository<CompanyListLookUpReadModelEntity, UUID> {
+    JpaRepository<CompanyListLookUpReadModelEntity, UUID> {
   @Transactional fun deleteBySettingsId(settingsId: UUID)
 
   fun findByCompanyId(companyId: Long): CompanyListLookUpReadModelEntity?
@@ -25,7 +25,7 @@ interface CompanyListLookUpReadModelRepository :
  */
 @Component
 class CompanyListLookUpReadModelProjector(
-        private val repository: CompanyListLookUpReadModelRepository
+    private val repository: CompanyListLookUpReadModelRepository
 ) {
 
   /**
@@ -54,15 +54,15 @@ class CompanyListLookUpReadModelProjector(
 
     // 2. Map the list from the event to our persistent entities
     val entities =
-            event.listOfCompanies.map { info ->
-              CompanyListLookUpReadModelEntity().apply {
-                this.companyId = info.companyId
-                this.companyName = info.companyName
-                this.settingsId = settingsId
-                this.connectionId = connectionId
-                this.timestamp = now
-              }
-            }
+        event.listOfCompanies.map { info ->
+          CompanyListLookUpReadModelEntity().apply {
+            this.companyId = info.companyId
+            this.companyName = info.companyName
+            this.settingsId = settingsId
+            this.connectionId = connectionId
+            this.timestamp = now
+          }
+        }
 
     // 3. Save all new records to the database
     if (entities.isNotEmpty()) {

@@ -22,11 +22,7 @@ class ConnectionAdminAggregate {
     require(command.adminEmail.isNotBlank()) { "Admin email must not be empty" }
 
     AggregateLifecycle.apply(
-            AdminConnectedEvent(
-                    connectionId = command.connectionId,
-                    adminEmail = command.adminEmail
-            )
-    )
+        AdminConnectedEvent(connectionId = command.connectionId, adminEmail = command.adminEmail))
   }
 
   @EventSourcingHandler

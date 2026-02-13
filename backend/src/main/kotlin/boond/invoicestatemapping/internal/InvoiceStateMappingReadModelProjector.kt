@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 // Repository
 // --------------------
 interface InvoiceStateMappingProjectionRepository :
-        JpaRepository<InvoiceStateMappingProjectionEntity, UUID> {
+    JpaRepository<InvoiceStateMappingProjectionEntity, UUID> {
   @Transactional fun deleteBySettingsId(settingsId: UUID)
 
   fun findBySettingsId(settingsId: UUID): List<InvoiceStateMappingProjectionEntity>
@@ -27,7 +27,7 @@ interface InvoiceStateMappingProjectionRepository :
 @ProcessingGroup("invoiceStateMappingProjector")
 @Component
 class InvoiceStateMappingProjector(
-        private val repository: InvoiceStateMappingProjectionRepository
+    private val repository: InvoiceStateMappingProjectionRepository
 ) {
 
   @EventHandler
@@ -47,15 +47,14 @@ class InvoiceStateMappingProjector(
     }
 
     val entities =
-            event.invoiceStateMapping.map { mapping ->
-              InvoiceStateMappingProjectionEntity(
-                      settingsId = event.settingsId,
-                      code = mapping.code,
-                      label = mapping.label,
-                      connectionId = connectionId,
-                      timestamp = now
-              )
-            }
+        event.invoiceStateMapping.map { mapping ->
+          InvoiceStateMappingProjectionEntity(
+              settingsId = event.settingsId,
+              code = mapping.code,
+              label = mapping.label,
+              connectionId = connectionId,
+              timestamp = now)
+        }
     repository.saveAll(entities)
   }
 }
